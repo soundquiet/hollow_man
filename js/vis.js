@@ -31,7 +31,7 @@ let overview = function(){
         .attr("transform", `translate(40,240)`)
         //.attr("transform", `rotate(90, 400 600) scale(1.3)`);;
 
-    d3.csv("../data/app.csv", function(data){
+    d3.csv("data/app.csv", function(data){
         data.forEach(d => {
             d.authority = parseInt(d.authority);
             d.times = parseInt(d.times);
