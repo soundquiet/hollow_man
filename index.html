@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    </head>
+    <link rel = "stylesheet" href="css/vis.css">
+    <link rel = "stylesheet" href="css/jquery-ui.min.css">
+    <body>
+        
+        <div class="container">
+            <div class="step_arr">
+                <div class="step_load" id="step_load_0" style="position: relative;overflow: hidden; background-color: #fff; z-index: 1000">
+                    <div id="cover" class="cover" style="height: 100vh; width:100vw;"></div>
+                </div>
+                <div class="block"></div>
+                <!--question-->
+                <div class="block"></div>
+                <!--user introduction-->
+                <div class="step" id="step_user_intro">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>生活中，手机成为了我们的好伴侣。</p>    
+                            <p>在与手机的交往中，手机越来越了解我们的一些隐私。</p>       
+                            <p>我们进行了一项实验，了解实验者在一天内的<em> 权限使用情况 </em>。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--权限-->
+                <div class="step" id="step_vis_0">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>我们关注了如图所示的<em> 六种权限 </em>。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--color-->
+                <div class="step" id="step_vis_1">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>不同的<em> 颜色 </em>表示不同的<em> 权限 </em>。</p>
+                            <ul>
+                                <li><i style="background: #58B5A0;"></i><span>读取设备通话状态和识别码</span></li>
+                                <li><i style="background: #BACA5C;"></i><span>读取位置信息</span></li>
+                                <li><i style="background: #EED05D;"></i><span>读取联系人</span></li>
+                                <li><i style="background: #859FD0;"></i><span>新建/修改/删除联系人</span></li>
+                                <li><i style="background: #C2A3CD;"></i><span>调用摄像头</span></li>
+                                <li><i style="background: #CD6A53;"></i><span>启动录音</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--size-->
+                <div class="step" id="step_vis_2">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>矩形的<em> 面积 </em>表示权限被获取的<em> 次数 </em>。</p>
+                            <p>矩形越大表示该权限被获取的次数越多。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--texture-->
+                <div class="step" id="step_vis_3">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>有一些权限已经被用户<em> 禁用 </em>。</p>
+                            <p>被禁用的权限添上<em> 斜线 </em>纹理。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--overview-->
+                <div class="step" id="step_vis_4">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>那么，<em> 一天中都有哪些权限在被获取呢 </em>？</p>
+                            <p>自上而下，我们分别可以看到</p>
+                                <ul>
+                                    <li><i style="background-image: url('images/zibaoziqi_r.png');"></i>自暴自弃的小A，</li>
+                                    <li><i style="background-image: url('images/shenbuyouji_r.png');"></i>身不由己的小B，</li>
+                                    <li><i style="background-image: url('images/jinxiaoshengwei_r.png');"></i>谨小慎微的小C </li>
+                                </ul>
+                            <p>一天中的权限获取情况。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <div class="step" id="step_vis_5">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p class='step_p'>关于恋爱，大家都在好奇什么？</p>
+                            <p class='step_p'>澎湃新闻在知乎的“恋爱”版块上收集了1139个问题。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!-- <div class="step" id="step_vis_6">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p class='step_p'>关于恋爱，大家都在好奇什么？</p>
+                            <p class='step_p'>澎湃新闻在知乎的“恋爱”版块上收集了1139个问题。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div> -->
+                <div class="step" id="step_vis_final">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p class='step_p'>尽量关闭应用的敏感权限</p>
+                            <p class='step_p'>澎湃新闻在知乎的“恋爱”版块上收集了1139个问题。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <div class="block"></div>
+                <div class="step" id="step_choice_0">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content" style='text-align: center;'>
+                            <p class='step_p'>做选择题啦</p>
+                            <p class='step_p'>好吗</p>
+                            <div style="display: inline-block;">
+                                <button class="button_pos" value="0_pos" onclick="questionAns(this.value)">tongyi</button>
+                                <button class="button_neg" value="0_neg" onclick="questionAns(this.value)">tongyi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <div class="block"></div>
+                <div class="step" id="step_choice_1">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content" style='text-align: center;'>
+                            <p class='step_p'>做选择题啦2</p>
+                            <p class='step_p'>好吗</p>
+                            <div style="display: inline-block;">
+                                <button class="button_pos" value="1_pos" onclick="questionAns(this.value)">tongyi</button>
+                                <button class="button_neg" value="1_neg" onclick="questionAns(this.value)">tongyi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <div class="block"></div>
+                <div class="step" id="step_choice_2">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content" style='text-align: center;'>
+                            <p class='step_p'>做选择题啦3</p>
+                            <p class='step_p'>好吗</p>
+                            <div style="display: inline-block;">
+                                <button class="button_pos" value="2_pos" onclick="questionAns(this.value)">tongyi</button>
+                                <button class="button_neg" value="2_neg" onclick="questionAns(this.value)">tongyi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <div id='question'>
+                    <div class='question_div'>
+                        <div class='question_inner'>
+                            <!-- <img class='markImg' src="images/wenhao2.png"> -->
+                            <svg t="1576511246797" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2073"
+                                width="200" height="200">
+                                <path id='questionMark'
+                                    d="M500.382 0.006c-177.646 19.719-276.341 96.721-296.085 230.93-3.949 43.437 17.757 67.13 65.143 71.066 23.667 3.961 43.411-13.808 59.207-53.296 23.692-82.9 80.862-124.35 171.735-124.35 110.479 7.885 169.698 63.156 177.671 165.8 0 94.759-64.313 110.202-99.248 138.774-44.267 36.218-73.217 72.952-108.655 135.216-29.779 52.314-34.91 164.227-34.91 164.227 0 47.373 21.655 71.066 65.143 71.066 39.413 0 61.194-23.693 65.155-71.066 0 0 5.219-125.594 55.925-181.129 57.472-62.942 194.749-107.071 198.698-268.922C804.365 108.561 697.772 15.789 500.382 0.006zM500.382 859.162c-45.524 0-82.409 36.91-82.409 82.41 0 45.523 36.885 82.422 82.409 82.422s82.422-36.898 82.422-82.422c0-45.5-36.898-82.41-82.422-82.41z"
+                                    fill="#60af62" p-id="2074"></path>
+                            </svg>
+                        </div>
+                        <div class='question_inner'>
+                            <p class='questionText' id='questionText'>你手机上装了多少个APP</p>
+                        </div>
+                    </div>
+                </div>
+                <div id='question2'>
+                    <div class='question_div'>
+                        <div class='question_inner'>
+                            <!-- <img class='markImg' src="images/wenhao2.png"> -->
+                            <svg t="1576511246797" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2073"
+                                width="200" height="200">
+                                <path id='questionMark2'
+                                    d="M500.382 0.006c-177.646 19.719-276.341 96.721-296.085 230.93-3.949 43.437 17.757 67.13 65.143 71.066 23.667 3.961 43.411-13.808 59.207-53.296 23.692-82.9 80.862-124.35 171.735-124.35 110.479 7.885 169.698 63.156 177.671 165.8 0 94.759-64.313 110.202-99.248 138.774-44.267 36.218-73.217 72.952-108.655 135.216-29.779 52.314-34.91 164.227-34.91 164.227 0 47.373 21.655 71.066 65.143 71.066 39.413 0 61.194-23.693 65.155-71.066 0 0 5.219-125.594 55.925-181.129 57.472-62.942 194.749-107.071 198.698-268.922C804.365 108.561 697.772 15.789 500.382 0.006zM500.382 859.162c-45.524 0-82.409 36.91-82.409 82.41 0 45.523 36.885 82.422 82.409 82.422s82.422-36.898 82.422-82.422c0-45.5-36.898-82.41-82.422-82.41z"
+                                    fill="#fbfa6a" p-id="2074"></path>
+                            </svg>
+                        </div>
+                        <div class='question_inner'>
+                            <p class='questionText' id='questionText2_1'>在怀疑APP窃取我们隐私的同时</p>
+                            <p class='questionText' id='questionText2_2'>我们自己保护好隐私了吗</p>
+                        </div>
+                    </div>
+                </div>
+                <div id='choice'>
+                    <div>
+                        <div class='vs_pos'>
+                            <p id='vs_text_pos'>隐私</p>
+                        </div>
+                        <div class="vs_neg">
+                            <p id='vs_text_neg'>???</p>
+                        </div>
+                    </div>
+                    <div id='vs_story'>
+                        Story
+                    </div>
+                </div>
+                <div id="user-introduction">
+                    <h1 class = "intro-title"> 实验者 </h1>
+                    <div class = "user-container">
+                        <div class="user-info">
+                            <img src="images/zibaoziqi.png"/>
+                            <div class="user-text">
+                                <h2 id = "user-name">自暴自弃的小A</h2>
+                                <p>“我的手机号早已泄漏，</p>
+                                <p>根本不在怕的。”</p>
+                            </div>
+                        </div>
+                        <div class="user-info">
+                            <img src="images/shenbuyouji.png"/>
+                            <div class="user-text">
+                                <h2 id = "user-name">身不由己的小B</h2>
+                                <p>“很怕隐私被泄漏，</p>
+                                <p>但在不断让步。”</p>
+                            </div>
+                        </div>
+                        <div class="user-info">
+                            <img src="images/jinxiaoshengwei.png"/>
+                            <div class="user-text">
+                                <h2 id = "user-name">谨小慎微的小C</h2>
+                                <p>“认真阅读app隐私条款，</p>
+                                <p>绝不多给一个权限。”</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id = "vis"> 
+                    <h1 class = "intro-title" id = "vis-title"> 权限 </h1>
+                    <div id = "vis-container"> <div>
+                </div>
+            </div>
+        </div>
+        <div class = "end">
+            <img class = "end-img"></img>
+        </div>
+        
+        <!-- <button id="next" style="font-size: 100px;"> next</button>
+        <button id="back" style="font-size: 100px; background: #eee;">back </button> -->
+    </body>
+    <script src = "js/ref/jquery.min.js"></script>
+    <script src = "js/ref/jquery-ui.min.js"></script>
+    <script src = "js/ref/d3.v4.min.js"></script>
+    <script src = "js/ref/textures.js"></script>
+    <script src = "js/property.js"></script>
+    <script src = "js/introduction.js"></script>
+    <script src = "js/vis.js"></script>
+    <script src = "js/load_data.js"></script>
+    <script src = "js/load.js"></script>
+    <script src = "js/action.js"></script>
+    <script src = "js/main.js"></script>
+</html>
