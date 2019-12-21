@@ -4,8 +4,18 @@ const actionList = [
     introSize,
     introTexture,
     overview,
+    highlightTime,
+    highlightLocation,
+    highlightID,
+    empty,//科普
+    highlightPerson,
     detail1,
-    detail2
+    higlightNight,
+    detail2,
+    empty,//loacation && id
+    empty,//科普
+    detail3,
+    empty,//建议
 ];
 
 const backList = [
@@ -13,7 +23,18 @@ const backList = [
     introSize_back,
     introTexture_back,
     overview_back,
-    detail1_back
+    highlightTime_back,
+    highlightLocation_back,
+    highlightID_back,
+    empty,//科普
+    highlightPerson_back,
+    detail1_back,
+    higlightNight_back,
+    detail2_back,
+    empty,
+    empty,
+    detail3_back,
+    empty,//建议
 ]
 
 let currentIndex = 0;

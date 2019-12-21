@@ -10,14 +10,21 @@ const people = [{
 }];
 const period = ["9","12","15","18","21","24"];
 const ticks = ["0","9","12","15","18","21","24"];
-const person2app = {};
+const person2app = {
+    "csj":["微信", "微博","支付宝", "高德地图", "QQ", "手机淘宝", 
+        "知乎", "快应用中心","虾米音乐", "网易云音乐"],//,"石墨文档", "精品推荐","WPS Office","同心云"
+    "jkl":[ "微信", "支付宝", "第一弹泰日韩剧","微博","西瓜视频","知乎","高德地图",
+             "哈啰出行", "QQ", "网易云音乐",],//"网易邮箱大师",
+    "ponda":["微信", "QQ", "手机淘宝",
+        "高德地图","支付宝", "小红书","交通银行","全能扫描王","微博国际版","大麦" ],// ,"美图秀秀","网易云音乐",
+};
 
 const lengthPerTime = 3.6;
 const lineHeight = 200,
-        blockWidth = 120,
-        lineHeight_app = lineHeight / 2;
+    blockWidth = 120,
+    lineHeight_app = lineHeight / 2;
 
-const overview2detailScale = 1.5;
+const overview2detailScale = 1.4;
 
 let overview = function(){
     //clear
@@ -76,8 +83,7 @@ let overview = function(){
                 return nodes;
             });
 
-            let apps = Array.from(new Set(origindata.map(d => d.app)));
-            person2app[p.name] = apps;
+            let apps = person2app[p.name];
             p["appData"] = p["data"].map(d => {
                 return apps.map(appName => {
                     let appnodes = d.filter(d0 => d0.app === appName);
@@ -118,13 +124,13 @@ let overview = function(){
             .attr("x", (d, i) => i * blockWidth)
             .attr("y", 20)
             .attr("text-anchor", "middle")
-            .attr("font-size", 20)
+            .attr("font-size", 26)
             .text(d => d);
 
         ticks_g.append('circle')
             .attr("cx", (d, i) => i * blockWidth)
             .attr("cy", 40)
-            .attr("r", 3);
+            .attr("r", 5);
 
         //treemap
         people_groups = vis_g.selectAll("people_groups")
@@ -164,7 +170,7 @@ let overview = function(){
         let blocks = people_groups.selectAll(".block")
             .data(d => d.periodData, (d,i) => i)
             .enter().append("g")
-            .attr("class","block")
+            .attr("class",(d , i) => "block block_"+ i)
             .attr("transform", (d , i) => {
                 return `translate(`+ (i * blockWidth + (blockWidth - d[0].parent.x1 + d[0].parent.x0) / 2) +`,`+ (lineHeight - d[0].parent.y1 + d[0].parent.y0) / 2 +`)`
             });
@@ -189,7 +195,8 @@ let overview = function(){
             .attr("x", d => d.x0)
             .attr("y", d => d.y0)
             .attr("width", d => d.x1 - d.x0)
-            .attr("height", d => d.y1 - d.y0);
+            .attr("height", d => d.y1 - d.y0)
+            .attr("opacity", 0);
 
         blocks.selectAll(".cluster")
             .data(d => d.filter(d => d.depth === 1))
@@ -202,7 +209,30 @@ let overview = function(){
             .attr("x", d => d.x0)
             .attr("y", d => d.y0)
             .attr("width", d => d.x1 - d.x0)
-            .attr("height", d => d.y1 - d.y0);
+            .attr("height", d => d.y1 - d.y0)
+            .attr("opacity", 1);
+
+        //legend
+        let legends = vis_g.append('g')
+            .attr('class', 'legends')
+            .attr('transform', `translate(85,1100)`)
+            .selectAll('.legend')
+            .data(Authority, d => d.name)
+            .enter().append("g")
+            .attr("class", "legend")
+            .attr("transform", (d, i) => `translate(`+ (i) * 100 +`,` + 0 + `)`);
+
+        legends.append("rect")
+            .attr("width", circle_r)
+            .attr("height", circle_r)
+            .attr("rx", circle_r / 2)
+            .attr("ry", circle_r / 2)
+            .attr("fill", d => d.color);
+    
+        legends.append("path")
+            .attr("fill", "#fff")
+            .attr("transform", "translate(9.5,9.5) scale(0.04, 0.04)")
+            .attr("d", d => d.icon);
     });
 }
 
@@ -211,8 +241,95 @@ let overview_back = function(){
     vis_g.attr("opacity", 0);
 }
 
+let highlightTime = function(){
+    vis_g.selectAll(".tick")
+        .transition()
+        .delay((d, i) => i * 100)
+        .duration(100)
+        .attr("transform", (d,i) => "translate(-"+ i * blockWidth +", -20) scale(2)")
+        .transition()
+        .delay(120)
+        .duration(200)
+        .attr("transform", "translate(0, 0)");
+}
+
+let highlightTime_back = function(){
+    
+}
+
+let highlightLocation = function(){
+    vis_g.selectAll(".cluster")
+        .filter(d => d.data.name !== "读取位置信息")
+        .transition()
+        .duration(1000)
+        .attr("opacity", 0.3);
+}
+
+let highlightLocation_back = function(){
+    vis_g.selectAll(".cluster")
+        .transition()
+        .duration(1000)
+        .attr("opacity", 1);
+}
+
+let highlightID = function(){
+    vis_g.selectAll(".cluster")
+        .attr("opacity", 1)
+        .filter(d => d.data.name !== "读取设备通话状态和识别码")
+        .transition()
+        .duration(1000)
+        .attr("opacity", 0.3);
+}
+
+let highlightID_back = function(){
+    vis_g.selectAll(".cluster")
+        .attr("opacity", 1)
+        .filter(d => d.data.name !== "读取位置信息")
+        .transition()
+        .duration(1000)
+        .attr("opacity", 0.3);    
+}
+
+let highlightPerson = function(){
+    vis_g.selectAll(".cluster")
+        .attr("opacity", 1);
+
+    let duration = 60;
+    people_groups.filter(d => d.name === "ponda")
+        .transition()
+        .duration(duration)
+        .attr("transform", `translate(-40 ,`+ (2 * lineHeight + 40)+") scale(1.2)")
+        .transition()
+        .delay(duration)
+        .duration(duration)
+        .attr("transform", `translate(0 ,`+ (2 * lineHeight + 40)+")")
+        .transition()
+        .delay(2 * duration)
+        .duration(duration)
+        .attr("transform", `translate(-40 ,`+ (2 * lineHeight + 40)+") scale(1.2)")
+        .transition()
+        .delay(3 * duration)
+        .duration(duration)
+        .attr("transform", `translate(0 ,`+ (2 * lineHeight + 40)+")")
+}
+
+let highlightPerson_back = function(){
+    highlightID();
+}
+
+let showDetail = {
+    "csj": false,
+    "jkl": false,
+    "panda":false
+}
 let detail = function(name){
+    if(showDetail[name]){
+        return detail_back(name);
+    }
+    showDetail[name] = true;
     let person;
+    vis_g.selectAll(".node")
+        .attr("opacity", 1);
     people_groups.each(function(d){
         if(d.name === name){
             //clear
@@ -222,6 +339,10 @@ let detail = function(name){
             person = d3.select(this)
                 .attr("opacity", 1)
                 .attr("transform", (d , i) => `translate(0 ,`+ (20) +`)`);
+            
+            //clear
+            person.selectAll(".node").filter(d => person2app[name].indexOf(d.data.app) === -1)
+                .remove();
             person.selectAll(".decoration")
                 .transition()
                 .delay(0)
@@ -231,14 +352,14 @@ let detail = function(name){
             person.selectAll(".cluster")
                 .transition()
                 .delay(0)
-                .duration(600)
+                .duration(800)
                 .attr("opacity", 0);
 
             let blocks = person.selectAll(".block")
                 .data(d => d.appData, (d,i) => i)
                 .transition()
-                .delay(300)
-                .duration(1000)
+                .delay(600)
+                .duration(700)
                 .attr("transform", (d , i) => {
                     return `translate(`+ 0 +`,`+ 0 +`)`//
                 });
@@ -250,8 +371,8 @@ let detail = function(name){
                     block.selectAll(".node")
                         .data(appBlockData.filter(d => d.depth !== 0), d => d.data.app + d.data.time + d.data.authority)
                         .transition()
-                        .delay(300)
-                        .duration(1000)
+                        .delay(600)
+                        .duration(700)
                         .attr("x", d => d.x0 + i_time * blockWidth + (blockWidth - d.parent.x1 + d.parent.x0) / 2)
                         .attr("y", d => d.y0 + (i_app + 0)* lineHeight_app + 50 + (lineHeight_app - d.parent.y1 + d.parent.y0) / 2)
                         .attr("width", d => d.x1 - d.x0)
@@ -286,6 +407,19 @@ let detail = function(name){
                     .delay(1900)
                     .duration(300)
                     .attr("opacity", 1);   
+
+                back.append("svg:image")
+                    .attr("class", "app_decoration")
+                    .attr("xlink:href", "images/"+ appName +'.jpg')
+                    .attr("width", 50)
+                    .attr("height", 50)
+                    .attr("x", -25)
+                    .attr("y", lineHeight_app / 2 + (i + 0)* lineHeight_app + 25)
+                    .attr("opacity", 0)
+                    .transition()
+                    .delay(1800)
+                    .duration(300)
+                    .attr("opacity", 1);   
             });
         }else{
             d3.select(this)
@@ -296,12 +430,91 @@ let detail = function(name){
                 .attr("opacity", 0);
         }
     });
+    person.selectAll('.nodes');
+}
 
+let detail_back = function(name){
+    let person;
+    vis_g.selectAll(".node")
+        .attr("opacity", 1);
+    people_groups.each(function(d){
+        if(d.name === name){
+            //clear
+            vis_g.selectAll(".app_decoration").remove();
+
+            vis_g.attr("transform", (d , i) => `translate(40 ,`+ (0) +`)`);
+            person = d3.select(this)
+                .attr("opacity", 1)
+                .attr("transform", (d , i) => `translate(0 ,`+ (20) +`)`);
+            
+            //clear
+            person.selectAll(".node").filter(d => person2app[name].indexOf(d.data.app) === -1)
+                .remove();
+            person.selectAll(".decoration")
+                .attr("opacity", 0);
+            
+            person.selectAll(".cluster")
+                .attr("opacity", 0);
+
+            let blocks = person.selectAll(".block")
+                .data(d => d.appData, (d,i) => i)
+                .attr("transform", (d , i) => {
+                    return `translate(`+ 0 +`,`+ 0 +`)`//
+                });
+
+            blocks.nodes().forEach(function(block, i_time){
+                block = d3.select(block);
+                let blockData = block.data()[0];
+                blockData.forEach((appBlockData, i_app)=> {
+                    block.selectAll(".node")
+                        .data(appBlockData.filter(d => d.depth !== 0), d => d.data.app + d.data.time + d.data.authority)
+                        .attr("x", d => d.x0 + i_time * blockWidth + (blockWidth - d.parent.x1 + d.parent.x0) / 2)
+                        .attr("y", d => d.y0 + (i_app + 0)* lineHeight_app + 50 + (lineHeight_app - d.parent.y1 + d.parent.y0) / 2)
+                        .attr("width", d => d.x1 - d.x0)
+                        .attr("height", d => d.y1 - d.y0);
+                });
+            });
+
+            let back = people_groups.select('.back');
+            person2app[name].forEach(function(appName, i){
+                back.append("line")
+                    .attr("class", "app_decoration")
+                    .attr("x1", 0)
+                    .attr("x2", blockWidth * 0)
+                    .attr("y1", lineHeight_app / 2 + (i + 0)* lineHeight_app + 50)
+                    .attr("y2", lineHeight_app / 2 + (i + 0)* lineHeight_app + 50)
+                    .attr("stroke", "#333")
+                    .attr("stroke-width", '1')
+                    .attr("x2", blockWidth * 6);
+
+                back.selectAll(".circle")
+                    .data(ticks, d => appName)
+                    .enter().append("circle")
+                    .attr("class", "app_decoration")
+                    .attr("cx", (d, i) => i * blockWidth)
+                    .attr("cy", lineHeight_app / 2 + (i + 0)* lineHeight_app + 50)
+                    .attr("r", 3)
+                    .attr("opacity", 1);   
+
+                back.append("svg:image")
+                    .attr("class", "app_decoration")
+                    .attr("xlink:href", "images/"+ appName +'.jpg')
+                    .attr("width", 50)
+                    .attr("height", 50)
+                    .attr("x", -25)
+                    .attr("y", lineHeight_app / 2 + (i + 0)* lineHeight_app + 25)
+                    .attr("opacity", 1);   
+            });
+        }else{
+            d3.select(this)
+                .attr("opacity", 0);
+        }
+    });
     person.selectAll('.nodes');
 }
 
 let detail1 = function(){
-    detail("jkl");
+    detail("csj");
 }
 
 let detail1_back = function(){
@@ -310,6 +523,116 @@ let detail1_back = function(){
     overview();
 }
 
+let higlightNight = function(){
+    let animation_g = people_groups.filter(d => d.name === "csj")
+        .selectAll(".block_0")
+        .append("g")
+        .attr("class", "animation")
+    let duration = 400,
+        padding_i = 27;
+
+    animation_g.append("line")
+        .attr("stroke", "rgb(27, 12, 59)")
+        .attr("stroke-width", 3)
+        .attr("x1", padding_i)
+        .attr("y1", lineHeight / 2 - 50)
+        .attr("x2", padding_i)
+        .attr("y2", lineHeight / 2 - 50)
+        .transition()
+        .duration(duration)
+        .attr("x2", blockWidth - padding_i);
+    animation_g.append("line")
+        .attr("stroke", "rgb(27, 12, 59)")
+        .attr("stroke-width", 3)
+        .attr("x1", blockWidth - padding_i)
+        .attr("y1", lineHeight / 2 - 50)
+        .attr("x2", blockWidth - padding_i)
+        .attr("y2", lineHeight / 2 - 50)
+        .transition()
+        .delay(duration)
+        .duration(duration)
+        .attr("y2", 11 * lineHeight / 2 - 50);
+    animation_g.append("line")
+        .attr("stroke", "rgb(27, 12, 59)")
+        .attr("stroke-width", 3)
+        .attr("x1", blockWidth - padding_i)
+        .attr("y1", 11 * lineHeight / 2 - 50)
+        .attr("x2", blockWidth - padding_i)
+        .attr("y2", 11 * lineHeight / 2 - 50)
+        .transition()
+        .delay(2 * duration)
+        .duration(duration)
+        .attr("x2", padding_i);
+    animation_g.append("line")
+        .attr("stroke", "rgb(27, 12, 59)")
+        .attr("stroke-width", 3)
+        .attr("x1", padding_i)
+        .attr("y1", 11 * lineHeight / 2 - 50)
+        .attr("x2", padding_i)
+        .attr("y2", 11 * lineHeight / 2 - 50)
+        .transition()
+        .delay(3 * duration)
+        .duration(duration)
+        .attr("y1", lineHeight / 2 - 50);
+        // .each(function(d){
+        //     let _this = this;
+        //     d.forEach(function(app_d, i){
+        //         if(app_d.length === 1 && app_d[0].value === 0) return;
+        //         console.log(i, i * lineHeight_app)
+        //         let circle_data = [{
+        //             "x": (blockWidth)/ 2,
+        //             "y": (i * lineHeight) /2 + lineHeight / 2,//+ 50
+        //             "startAngle":0,
+        //             "endAngle": 2 * Math.PI
+        //         }];
+        //         let arc = d3.arc()
+        //             .innerRadius(36)
+        //             .outerRadius(38);
+        //         d3.select(_this).selectAll("path.animation")
+        //             .data(circle_data, d => d.y)
+        //             .enter().append("path")
+        //             .attr("class", "animation")
+        //             .attr("stroke", "red")
+        //             .attr("fill", "red")
+        //             .attr("x", d => d.x)
+        //             .attr("y", d => d.y)
+        //             .attr("transform", d => "translate("+ d.x + "," + d.y + ")")
+        //             .attr("d", arc)
+        //             .transition()
+        //             .duration(1000)
+        //             .attrTween('d', function(d) {
+        //                 let i = d3.interpolate(d.startAngle+0.1, d.endAngle);
+        //                 return function(t) {
+        //                     d.endAngle = i(t);
+        //                     return arc(d);
+        //                 }
+        //             });
+        //     });
+        // });
+}
+
+let higlightNight_back = function(){
+    vis_g.selectAll(".animation").remove();
+}
+
 let detail2 = function(){
-    detail("lp");
+    vis_g.selectAll(".animation").remove();
+    detail("jkl");
+}
+
+let detail2_back = function(){
+    detail_back("csj");
+    higlightNight();
+}
+
+let detail3 = function(){
+    detail("ponda");
+}
+
+let detail3_back = function(){
+    detail_back("jkl");
+}
+
+let empty = function(){
+
 }

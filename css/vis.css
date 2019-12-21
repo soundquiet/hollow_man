@@ -66,12 +66,35 @@ body {
     line-height: 25px;
 }
 
-.information_container_content p{
+.information_container_head{
+    text-align: center;
+    text-decoration: wavy underline rgb(152,245,139);
+}
 
+.information_container_head .icon{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: url(../images/dengpao.svg);
+    background-size:cover;
+    background-repeat:no-repeat;
+    margin-bottom: -4px; 
+}
+
+.information_container_content .number{
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 0.5em;
+    background: rgb(152,245,139);
 }
 
 .information_container_content em{
-    text-shadow: -3px 3px 1px rgb(152,245,139);;
+    text-shadow: -3px 3px 1px rgb(152,245,139);
+}
+
+em {
+    text-shadow: -3px 3px 1px rgb(152,245,139);
 }
 
 .information_container_content {
@@ -112,7 +135,7 @@ body {
 
 .intro-title{
     position: fixed;
-    top: 12%;
+    top: 10%;
     text-shadow: -3px 3px 1px rgb(152,245,139);
 }
 
@@ -216,6 +239,31 @@ body {
     color: #190d39;  line-height: 10vh; margin-top: 0; margin-bottom: 0; font-size: 20px;
 }
 
+#choice_hint {
+    top: 35vh;position:fixed;text-align: center;width: 100vw;
+    display: none;
+}
+
+#span_circle_1 {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    margin-right: 2px;
+    border: 1px solid #b1f297;
+    background-color: #b1f297;
+    border-radius: 20%;
+}
+
+#span_circle_2 {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    margin-right: 2px;
+    border: 1px solid #170f37;
+    background-color: #170f37;
+    border-radius: 20%;
+}
+
 .button_pos {
     background-color: #9cf58c; /* Green */
     border: none;
@@ -255,10 +303,25 @@ body {
     #questionText {
         font-size: 60px
     }
+
+    .intro-title{
+        top: 5%;
+    }
     .step{
         width: 80vw;
         margin: auto;
         box-shadow: -20px 20px 0px 5px rgb(152,245,139);
+    }
+
+    #vis-container{
+        position: fixed;
+        top: 6vh;
+        overflow: hidden;
+    }
+    
+    #vis-container svg{
+        max-width: 100vw;
+        height: 88vh;
     }
 
     #next {background: blue;}

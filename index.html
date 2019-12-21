@@ -6,7 +6,6 @@
     <link rel = "stylesheet" href="css/vis.css">
     <link rel = "stylesheet" href="css/jquery-ui.min.css">
     <body>
-        
         <div class="container">
             <div class="step_arr">
                 <div class="step_load" id="step_load_0" style="position: relative;overflow: hidden; background-color: #fff; z-index: 1000">
@@ -130,6 +129,7 @@
                     </div>
                 </div>
                 <div class="block"></div>
+                <!--highlight time-->
                 <div class="step" id="step_vis_5">
                     <div class="information_head">
                         <img src="images/eye.svg" class = "information_head_icon">
@@ -140,13 +140,15 @@
                     </div>
                     <div class="information_container">
                         <div class="information_container_content">
-                            <p class='step_p'>关于恋爱，大家都在好奇什么？</p>
-                            <p class='step_p'>澎湃新闻在知乎的“恋爱”版块上收集了1139个问题。</p>
+                            <p>大正方形表示的是<em> 时间段内 </em>的权限获取情况。</p>
+                            <p>从左到右表示的是一天中的0点到24点。</p>
+                            <p>0点到9点实验者处于<em> 睡眠 </em>状态。</p>
                         </div>
                     </div>
                 </div>
                 <div class="block"></div>
-                <!-- <div class="step" id="step_vis_6">
+                <!--location-->
+                <div class="step" id="step_vis_6">
                     <div class="information_head">
                         <img src="images/eye.svg" class = "information_head_icon">
                         <div class = "information_head-right">
@@ -156,12 +158,199 @@
                     </div>
                     <div class="information_container">
                         <div class="information_container_content">
-                            <p class='step_p'>关于恋爱，大家都在好奇什么？</p>
-                            <p class='step_p'>澎湃新闻在知乎的“恋爱”版块上收集了1139个问题。</p>
+                            <p>所有权限中读取次数最多的权限是:</p>
+                            <p><i style="background: #BACA5C;"></i><em>读取位置信息</em></p>
                         </div>
                     </div>
                 </div>
-                <div class="block"></div> -->
+                <div class="block"></div>
+                <!--phone id-->
+                <div class="step" id="step_vis_7">
+                        <div class="information_head">
+                            <img src="images/eye.svg" class = "information_head_icon">
+                            <div class = "information_head-right">
+                                <img src="images/search.svg" class = "information_head_icon">
+                                <img src="images/right.svg" class = "information_head_icon">
+                            </div>
+                        </div>
+                        <div class="information_container">
+                            <div class="information_container_content">
+                                <p>其次，读取次数较多的权限还有: </p>
+                                <p><i style="background: #58B5A0;"></i><em>读取设备通话状态和识别码</em></p>
+                            </div>
+                        </div>
+                </div>
+                <div class="block"></div>
+                <!--科普-->
+                <div class="step" id="step_vis_8">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <h2 class="information_container_head"> 小 科 普  <i class="icon"></i></h2>
+                        <div class="information_container_content">
+                            <h3>设备通话状态：</h3>
+                            <p>可以让APP了解手机当前的 <em>状态</em> 。</p>
+                            <p>例如，播放音乐时如有电话呼入，音乐会暂停；当电话挂断后，音乐会继续播放。</p>
+                            <h3>识别码：</h3>
+                            <p>是手机的IMEI，相当于是手机的 <em>身份证</em> 。</p>
+                            <p>获取设备识别码，可以追踪到用户从 下载->激活->注册->使用->流失->回归 的全流程数据，对产品运营工作非常重要。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--person-->
+                <div class="step">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>在我们实验的三人中，被获取权限最少的是 <em>敬小慎微的小C</em> 。</p>
+                            <p>或许，对待隐私的态度还是能改变一些现状的。</p>
+                        </div>
+                    </div>
+                </div>
+                <!--for flicker-->
+                <div style="height: 40vh;"></div>
+                <div class="block" id="step_vis_9"></div>
+                <!--csj-->
+                <div class="step" id="step_vis_10">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>下面我们来看一看每个人的权限获取情况。</p>
+                            <p>因为使用到的APP数量比较多，所以我们 <em>过滤</em> 掉了部分使用权限次数很少的APP。</p>
+                            <p>并且我们按照权限读取次数的总和，从高到低进行了 <em>排序</em>。</p>
+                            <p>首先是 <em>自暴自弃的小A</em> 。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--night-->
+                <div class="step" id="step_vis_11">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>在夜深人静🌛，我们放下手机进入梦乡后🛌💤，仍有一些APP在辛劳的工作着。</p>
+                            <p>虽然我们无法推断缘由，但这看起来并不是个好现象。</p>
+                            <p>或许，开个飞行模式，一起神游吧。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--jkl-->
+                <div class="step" id="step_vis_12">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>接下来登场是 <em>身不由己的小B</em> 。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--location && call-->
+                <div class="step" id="step_vis_13">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>大多数的APP都在获取 <i style="background: #BACA5C;"></i><em>读取位置信息</em> 和 
+                                <i style="background: #58B5A0;"></i><em>读取设备通话状态和识别码</em> 。</p>
+                            <h3>小B疑惑 🤔?</h3>
+                            <p>为什么非地图类软件也要读取位置信息呢？</p>
+                            <p>为什么要一直读取设备识别码，很好用吗？</p>   
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--科普-->
+                <div class="step" id="step_vis_14">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <h2 class="information_container_head"> 小 科 普  <i class="icon"></i></h2>
+                        <div class="information_container_content">
+                            <h3>为什么 <em>读取位置信息</em> 和 <em>读取设备通话状态和识别码</em> 权限很重要? </h3>
+                            <p>有了这两份数据，APP就更能实现精准的广告推送和个性化的推荐。</p>
+                            <p>获取地理位置，可以准确追踪你的路径，搜寻附近喜欢，进行 <em>同城推荐</em> 等。</p>
+                            <p>而设备识别码，更是追踪一个人的重要标识，是追踪一个人的重要标识，利用设备识别码进行数据收集，可以进行千人千面的 <em>精准营销</em> 。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--ponda-->
+                <div class="step" id="step_vis_15">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>最后出场的是我们 <em>敬小慎微的小C</em> 。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!---->
+                <div class="step" id="step_vis_16">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content">
+                            <p>与前面两位实验者相同，微信高居榜首。</p>
+                            <p>小C说，微信确实在他生活中扮演了很重要的觉得，可自己没有主动在微信上进行任何与位置相关的操作🧐。</p>
+                            <p>而与前面两位实验者不同，微博却位于小C列表的下方。</p>
+                            <p>我们了解到，小C使用的是微博国际版，并且 <em>关闭了位置信息权限</em> 。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block"></div>
+                <!--suggestion-->
                 <div class="step" id="step_vis_final">
                     <div class="information_head">
                         <img src="images/eye.svg" class = "information_head_icon">
@@ -171,14 +360,19 @@
                         </div>
                     </div>
                     <div class="information_container">
+                        <h2 class="information_container_head"> 小 建 议  <i class="icon" ></i></h2>
                         <div class="information_container_content">
-                            <p class='step_p'>尽量关闭应用的敏感权限</p>
-                            <p class='step_p'>澎湃新闻在知乎的“恋爱”版块上收集了1139个问题。</p>
+                            <h3>尽量关闭应用的敏感权限</h3>
+                            <p>我们无法准确推断权限获取的流向，是为了更好的服务，还是我们不希望发生的事情。</p>
+                            <p>为了减少我们心中的那份不安。</p>
+                            <p><i class="number">1.</i>下载手机应用要认准知名 <em>应用商店</em> ，下载安全可靠的应用。</p>
+                            <p><i class="number">2.</i>安装应用后记得查看应用开放的权限。读取通讯录、读取短信通话记录等 <em>敏感权限</em> 尽量关闭.</p>
                         </div>
                     </div>
                 </div>
                 <div class="block"></div>
                 <div class="block"></div>
+                <!-- 第一个问题 -->
                 <div class="step" id="step_choice_0">
                     <div class="information_head">
                         <img src="images/eye.svg" class = "information_head_icon">
@@ -198,8 +392,27 @@
                         </div>
                     </div>
                 </div>
+                <!-- 第一个问题后的块，id用于滑动定位 -->
+                <div class="block" id='block_behind_q0'></div>
+                <!-- 第一个问题的建议 -->
+                <div class="step" id="question_suggestion_0">
+                    <div class="information_head">
+                        <img src="images/eye.svg" class = "information_head_icon">
+                        <div class = "information_head-right">
+                            <img src="images/search.svg" class = "information_head_icon">
+                            <img src="images/right.svg" class = "information_head_icon">
+                        </div>
+                    </div>
+                    <div class="information_container">
+                        <div class="information_container_content" style='text-align: center;'>
+                            <h1>防患于未然</h1>
+                            <p class='step_p'>不要点！不要点！不要点！所有未知的链接都不要轻易点开</p>
+                            <p class='step_p'>街边、地铁上的二维码不要轻易扫描</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="block"></div>
-                <div class="block"></div>
+                <!-- 第二个问题 -->
                 <div class="step" id="step_choice_1">
                     <div class="information_head">
                         <img src="images/eye.svg" class = "information_head_icon">
@@ -219,8 +432,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="block"></div>
-                <div class="block"></div>
+                <div class="block" id='block_behind_q1' style="background: #859FD0;"></div>
+                <div class="block" style="background: #859FD0;"></div>
                 <div class="step" id="step_choice_2">
                     <div class="information_head">
                         <img src="images/eye.svg" class = "information_head_icon">
@@ -240,7 +453,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="block"></div>
+                <div class="block" id='block_behind_q2'></div>
+                <!-- 颜色问题1 -->
                 <div id='question'>
                     <div class='question_div'>
                         <div class='question_inner'>
@@ -257,6 +471,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- 颜色问题2 -->
                 <div id='question2'>
                     <div class='question_div'>
                         <div class='question_inner'>
@@ -274,7 +489,9 @@
                         </div>
                     </div>
                 </div>
+                <!-- 选项固定的底板 -->
                 <div id='choice'>
+                    <!-- 血条 -->
                     <div>
                         <div class='vs_pos'>
                             <p id='vs_text_pos'>隐私</p>
@@ -283,8 +500,45 @@
                             <p id='vs_text_neg'>???</p>
                         </div>
                     </div>
-                    <div id='vs_story'>
-                        Story
+                    <!-- 选择题过渡语 -->
+                    <div class="question_hint" style="position: fixed; top:15vh">
+                        <p class="information_container_content">
+                            为此，我们提供了几个场景。看看你会在相应场景做出怎样的选择呢？
+                        </p>
+                        <p class="information_container_content">
+                             <em>向上滑动</em>，查看问题
+                        </p>
+                    </div>
+                    <div class="question_hint" id='choice_hint'>
+                        <p>请点击
+                            <span id='span_circle_1'></span>
+                            <span id='span_circle_2'></span>
+                            做出相应选择</p>
+                    </div>
+                    <!-- 第一个选项对应的故事 -->
+                    <div id='vs_story_0' style="display: none; margin-top: 10vw;width:100vw">
+                        <!-- 选项话语 和 列表 -->
+                        <div style="margin-left: 10px;">
+                            <p id='ans_result_0'>你做对了！不然会导致...</p>
+                            <ul id='ans_result_list_0'>
+                                <li>
+                                    下载不安全应用
+                                </li>
+                                <li>
+                                    落入骗子陷阱，遭遇新型诈骗
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 案例 -->
+                        <div  style="width: 80vw;margin: auto;">
+                            <div>
+                                <p style="text-align: center; font-size: 20px;"><em>案例</em></p>
+                                <p>骗子利用受害人不清楚“携号转网”具体规则，以转网可能带来诸多风险为借口，引导受害人<em>点击虚假链接</em>。一旦点击链接进入其搭建的虚假网站，骗子就会进一步<em>诱导受害人提供身份证、银行卡账户等个人信息</em>，并通过盗刷银行卡等方式实施诈骗。</p>
+                            </div>
+                            <div>
+                                <img src="images/result1.png" style="width: 70vw; box-shadow: 20px 20px rgb(152,245,139)"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="user-introduction">
