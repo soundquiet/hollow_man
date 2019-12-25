@@ -1,3 +1,21 @@
+// window.onload= function(){
+//     console.log('load')
+//     drawing_cover();
+//     scroll_show();
+//     loadData();
+// }
+// while (document.readyState !== 'complete') {
+    // 页面已完全加载 在这里隐藏 loading
+//   }
+document.onreadystatechange = () => {
+    if (document.readyState === 'complete') {
+      // document ready
+        drawing_cover();
+        scroll_show();
+        loadData();
+    }
+};
+  
 let wh = $('body').height();
 
 let viewCurrentIndex = 0;
@@ -175,6 +193,3 @@ function scroll_show(){
         blur_trigger();
     });
 }
-
-scroll_show();
-loadData();

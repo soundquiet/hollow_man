@@ -27,7 +27,8 @@ const lineHeight = 200,
 const overview2detailScale = 1.4;
 
 let loadData = function(){
-    d3.csv("data/app.csv", function(data){
+    
+    d3.csv("data/app.csv", function(data){console.log("begin")
         data.forEach(d => {
             d.authority = parseInt(d.authority);
             d.times = parseInt(d.times);
@@ -101,11 +102,13 @@ let loadData = function(){
             });    
         });
         // overview();
+        console.log("end")
     });
 }
 
-let overview = function(){
+let overview = function(){console.log(dataSet)
     if(!dataSet) return;
+    
     //clear
     authority_g.attr("opacity", 0);
     if(vis_g){
