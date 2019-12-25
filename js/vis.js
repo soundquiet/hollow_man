@@ -213,9 +213,9 @@ let overview = function(){
             .attr("opacity", 1);
 
         //legend
-        let legends = vis_g.append('g')
+        let legends = svg.append('g')
             .attr('class', 'legends')
-            .attr('transform', `translate(85,1100)`)
+            .attr('transform', `translate(125,1100)`)
             .selectAll('.legend')
             .data(Authority, d => d.name)
             .enter().append("g")

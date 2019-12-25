@@ -1,58 +1,49 @@
-
 let wh = $('body').height();
 
 let viewCurrentIndex = 0;
 let changeColor = false;
 let endPage = false;
-let lock = false
-
+let lock0 = false,lock1 = false,lock2 = false;
+$('.question_none_2').css('display', 'none')
+$('.question_none_1').css('display', 'none')
+$('.question_none_0').css('display', 'none')
 const vis_text = ["权限","颜色","大小","纹理","","","","","","","",""]
 $('.container').scroll(function () {
     let top = $(this).scrollTop();
-
-    if(top >= trigger_dis('.end') + 0.1 * wh && !endPage){
-        $("#choice").css('opacity', 0);
+    if(top >= trigger_dis('.end')  && !endPage){//+ 0.8 * wh
+        // $("#vis").css('opacity', 0);
+        $("#question2").css('opacity', 0);
+        $("#end-content").css('opacity', 1);
+        
         endPage = true;
-
-        $('.container').scrollTop( $('.end').position().top )
-        $(".end-img").attr('src', 'images/end.gif');
+        // $('.container').animate({
+        //     scrollTop: $('.end').position().top + 1
+        // }, 1000);
+        $('.container').scrollTop($('.end').position().top + 1);
+        // setTimeout(function(){
+            $('.blinds').css('transform',"rotateX(0deg) translateZ(1px)");
+        // }, 1000);
+        setTimeout(function(){
+            $('.end-tilte').animate({
+                opacity: 1
+            }, 400);
+        }, 800);
     } else if(top >= trigger_dis('.end')){
+        // $("#vis").css('opacity', 0);
         //已经显示endpage
-    }else if(top < trigger_dis('.end') - wh * 0.2 && top >= trigger_dis('#step_choice_2') + wh){
-        $("#choice").css('opacity', 1);
+    }
+    else if(top < trigger_dis('.end') - wh * 0.2 && top >= trigger_dis('#last_block_2') + 3 *wh){
+        $("#end-content").css('opacity', 0);
+        $('.end-tilte').css('opacity', 0);
+        $('.blinds').css('transform',"rotateX(90deg) translateZ(1px)");
+        //已经显示endpage
         endPage = false;
     }
-    else if (top >= trigger_dis('#step_choice_2') +0.4 *wh && top < trigger_dis('#step_choice_2') + wh && !lock) { // 选择题第3屏
+    else if(top < trigger_dis('.end') - wh * 0.2 && top >= trigger_dis('#last_block_2') + 1.2 * wh){
+        $("#question2").css('opacity', 1);
         
-        // $("#question2").css('opacity', 0);
-        // $("#choice").css('opacity', 1);
-        console.log('in 3')
-        $(this).scrollTop($('#step_choice_2').position().top - 0.4 *wh);
-        $('#choice_hint').css('display', 'block')
-    }  else if (top >= trigger_dis('#step_choice_1') +0.4 *wh && top < trigger_dis('#step_choice_1') + wh  && !lock) { // 选择题第2屏
-        console.log('in 2')
-        // $("#question2").css('opacity', 0);
-        // $("#choice").css('opacity', 1);
-        $(this).scrollTop($('#step_choice_1').position().top - 0.4 *wh);
-        $('#choice_hint').css('display', 'block')
-    } else if (top >= trigger_dis('#block_behind_q0') + 0.8 * wh ) {
-        $(".question_hint").css('display', 'none');
-        $('#vs_story_0').css('display', 'inline-block')
-    } else if (top > trigger_dis('#step_choice_0') +0.4 *wh && top < trigger_dis('#step_choice_0') + wh && !lock) { // 选择题第一屏
-        console.log('11111')
-        $("#question2").css('opacity', 0);
-        $("#choice").css('opacity', 1);
-        $(this).scrollTop($('#step_choice_0').position().top - 0.4 *wh);
-        // stopScrollPhone('container')
-        $('#choice_hint').css('display', 'block')
-    } else if(top >= trigger_dis('#step_vis_final') + 2.2 * wh){
-        //
-        $("#question2").css('opacity', 0);
-        $('#choice').css('opacity', 1)
-        console.log('here')
     }
-    else if (top >= trigger_dis('#step_vis_final') + 1.2 * wh) {// 第二个问题第二屏
-        console.log('fjeoiawj eiojwa')
+    else if (top >= trigger_dis('#last_block_2') + 0.8 * wh) {// 第二个问题第二屏
         $("#question2").css('opacity', 1)
             .css({background:"#fbfa6a", transition: "0.5s"});
         $('#choice').css('opacity', 0)
@@ -60,7 +51,8 @@ $('.container').scroll(function () {
         $('#questionMark2').attr("d", "M450.602458 665.598073a62.463819 62.463819 0 0 0 122.879645 0L614.441984 102.399704A102.615282 102.615282 0 0 0 512.04228 0 105.256116 105.256116 0 0 0 409.642577 112.639674L450.602458 665.598073z m61.439822 153.599556a102.399704 102.399704 0 1 0 102.399704 102.399703 96.740773 96.740773 0 0 0-102.399704-102.399703z")
         $('#questionText2_1').text("有些隐私泄露是我们自己")
         $('#questionText2_2').text("在不经意间晒出去的")
-    }else if (top >= trigger_dis('#step_vis_final') + 0.8 * wh) { // 第二个问题第一屏
+    }
+    else if (top >= trigger_dis('#step_vis_final') + wh) { // 第二个问题第一屏
         $("#vis").css('opacity', 0);
         $("#question2").css('opacity', 1)
                     .css({background:"#64ae61", transition: "0.5s"});
@@ -73,9 +65,9 @@ $('.container').scroll(function () {
         $("#question2").css('opacity', 0);
         $("#vis").css('opacity', 1);
         $("#user-introduction").css('opacity', 0);
+        
         for(let i = 17; i--; i >= 0){
             if (top >= trigger_dis('#step_vis_' + i)) {
-                $("#vis-title").text(vis_text[i]);
                 action(i);
                 return;
             } 
@@ -85,7 +77,6 @@ $('.container').scroll(function () {
         $("#vis").css('opacity', 0);
         $("#user-introduction").css('opacity', 1);
         $("#question").css({opacity: 0, transition: "1s"});
-        console.log("...")
     }else if (top >= (1.5 * wh)) {
         $("#user-introduction").css('opacity', 0);
         $("#question").css('opacity', 1)
@@ -106,7 +97,8 @@ function trigger_dis(d) {
 
 function action(index){
     if(index === viewCurrentIndex) return;
-    
+    $(".vis-title").css({'opacity': 0});
+    $("#vis-title"+index).css({'opacity': 1});
     if(index > viewCurrentIndex){
         actionList[index]();
     }else{
@@ -120,24 +112,83 @@ function questionAns(value) {
     console.log(value)
     let question = value.split('_')[0];
     let selected = value.split('_')[1];
-    lock = true;
+    // let locki = 
+    eval('lock'+question+'=true')
+    // locki = true;
     // $('.container').scrollTop($('#step_choice_'+question).position().top + 0.5*wh);
     // enableScrollPhone('container')
-    $('.container').scrollTop($('#block_behind_q'+question).position().top + 0.1 * wh);
+    // $('.container').scrollTop($('#block_behind_q'+question).position().top + 1).css('transition', '1s');
+    $('.question_none_'+question).css('display', 'block');
+    $('.container').animate({
+        scrollTop: $('#block_behind_q'+question).position().top + 1
+    }, 1000);
+    // $('#block_q0').delay(1500).height(0)
+    setTimeout(function(){
+        $('#block_q0').css('height', '5vh')
+    }, 1100)
+    $('#last_block_' + question).css('height', '20vh')
     if(selected == 'pos') {
-        $('.vs_pos').css({'width': '80vw', transition:'0.5s'});
-        $('.vs_neg').css({'width': '20vw', transition:'0.5s'});
+        $('.vs_pos').css({'width': '80%', transition:'0.5s'});
+        $('.vs_neg').css({'width': '20%', transition:'0.5s'});
     } else {
-        $('.vs_neg').css({'width': '80vw', transition:'0.5s'});
-        $('.vs_pos').css({'width': '20vw', transition:'0.5s'});
-        $('#ans_result_'+question).text('啊哦，这可能导致...')
+        $('.vs_neg').css({'width': '80%', transition:'0.5s'});
+        $('.vs_pos').css({'width': '20%', transition:'0.5s'});
+        $('#ans_result_'+question).text(' 这可能导致...')
     }
-    $('#vs_text_neg').text(quesObject[question])    
-    // $('#vs_story').html('Story_' + question);
-    $('#choice_hint').css('display', 'none')
-    lock = false
+    $('#vs_text_neg_' + question).text(quesObject[question])    
+    // $('.vs_story_'+question).css('display', 'inline-block');
+    // lock = false
+}
+function para_dis(d){
+    return parseInt($(d).offset().top) - 20;
 }
 
+function underline_trigger(ele) {
+    var window_height = $(window).height();
+    if ( para_dis(ele) <= 2*window_height/3){
+        $(ele).addClass('underline_active');
+    } else {
+        $(ele).removeClass('underline_active');
+    }
+}
+
+// function blur_trigger() {
+//     var window_height = $(window).height();
+//     if ( para_dis(ele) <= 2*window_height/3){
+//         $('#question2').addClass('blur_active');
+//     } else {
+//         $('#question2').removeClass('blur_active');
+//     }
+// }
+
+function blur_trigger() {
+    var window_height = $(window).height();
+    if (para_dis('#chap3') <= 2*window_height/3 ) {
+        $('#question2').addClass('blur_active');
+        $('.questionText').css({'opacity': 0, transition:'0.5s'})
+    }
+    else if (para_dis('#last_block') <= 2*window_height/3 ) {
+        $('#question2').removeClass('blur_active');
+        $('.questionText').css({'opacity': 1, transition:'0.5s'})
+    }
+    else if ( para_dis('#question0_head') <= 2*window_height/3){
+        $('#question2').addClass('blur_active');
+        $('.questionText').css({'opacity': 0, transition:'0.5s'})
+    } else {
+        $('#question2').removeClass('blur_active');
+        $('.questionText').css({'opacity': 1, transition:'0.5s'})
+    }
+}
+
+function scroll_show(){
+    $('.container').scroll(function(){
+        underline_trigger('.ud-1');
+        underline_trigger('.ud-2');
+        underline_trigger('.ud-3');
+        underline_trigger('.ud-4');
+        blur_trigger();
+    });
+}
 
 // function stopScrollPhone() {
 //     var fixed = document.getElementById('container');
@@ -153,3 +204,4 @@ function questionAns(value) {
 //         e.preventDefault();
 //     }, false);
 // }
+scroll_show();

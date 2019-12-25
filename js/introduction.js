@@ -84,6 +84,13 @@ let introColor_back = function(){
 }
 
 let introSize = function(){
+    //防止滑动过快
+    authority_groups.selectAll("rect")
+        .attr("rx", 0)
+        .attr("ry", 0)
+        .attr("width", 1.5 * circle2rectScale * circle_r - padding)
+        .attr("height", circle2rectScale * circle_r - padding);
+
     authority_groups
         .transition()
         .attr("transform", (d) => `translate(`+ (d.size.x0 * 1.5 * circle2rectScale * circle_r - padding) +`,` + (d.size.y0 * circle2rectScale * circle_r  - padding) + `)`);

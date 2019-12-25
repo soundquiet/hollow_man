@@ -1,10 +1,6 @@
- //TODO change gif and cover
-// TODO 自适应 标题 和字号
-// TODO 两个封面
 const width = window.innerWidth;
 const height = window.innerHeight;
-console.log(width, height)
-let singleText = 20;
+let singleText = width < 400 ? 14: 20;
 
 let treemap = d3.treemap()
     .size([width, height])
@@ -31,12 +27,23 @@ nodes.forEach(node => {
 const svg_load = d3.selectAll('.cover').append("svg")
     .attr("viewBox", [0, 0, width, height]);
 
-svg_load.append("svg:image")
-    .attr('x', width / 2 - 20)
-    .attr('y', height / 2 - 20)
-    .attr("width", width * 0.2)
-    .attr("height", width * 0.2 * 290 / 360) // TODO 
+
+if (width > height) { //pc
+    svg_load.append("svg:image")
+    .attr('x', (width - 1299 * height * 0.6 / 600) / 2 )
+    .attr('y', (height - height * 0.6) / 2)
+    .attr("width", 1299 * height * 0.6 / 600)
+    .attr("height", height * 0.6) // TODO 
     .attr("xlink:href", "images/tenor.gif")
+} else {
+    svg_load.append("svg:image")
+    .attr('x', (width - width * 0.6) / 2 )
+    .attr('y', (height - width * 0.6 * 1299 / 600) / 2)
+    .attr("width", width * 0.6)
+    .attr("height", width * 0.6 * 1299 / 600) // TODO 
+    .attr("xlink:href", "images/tenor.gif")
+}
+
 
 const leaf = svg_load.selectAll("g")
     .data(root.leaves())
@@ -47,16 +54,28 @@ const leaf = svg_load.selectAll("g")
 
 
 leaf.append("rect")
-    // .attr("id", d => (d.leafUid = DOM.uid("leaf")).id)
-    .attr("fill", 'white')
-    .attr("stroke", 'black')
+    .attr('class', d=>{
+        let seed =  Math.random();
+        if(seed < 0.3) return 'cover_0';
+        else if(seed < 0.65) return "cover_1";
+        else return "cover_2"
+    })
+    .attr("stroke-width", 2)
+    .attr('rx', 2)
+    .attr('ry', 2)
+    // .attr("stroke-dasharray", "10 5")
     .attr("width", d => d.x1 - d.x0) 
     .attr("height", d => d.y1 - d.y0);
 
 leaf.append("text")
     // .attr('x', 52)
     .attr('y', 0)
-    .attr('font-size', 18)
+    .attr("fill", function(d){
+        let cla = d3.select(this.parentNode).select('rect').attr('class');
+        if (cla == 'cover_0' || cla == 'cover_1')   return "#1f073e";
+        else  return "#ffffff";
+    }) 
+    .attr('font-size', width < 400 ? 12: 18)
     .selectAll("tspan")
     .data(d => {
         let temp = [];
@@ -72,14 +91,13 @@ leaf.append("text")
     .enter()
     .append('tspan')
     .attr('x', 0)
-    .attr("dy", 20)
-    .attr("fill", "black")
+    .attr("dy", width < 400 ? 15: 20)
     .text(d => d);
 
 leaf.selectAll('text')
     .attr('transform', function(d) {
-        let bbox = d3.select(this).node().getBBox()
-        return "translate(" + (d.x1 - d.x0 - bbox.width) / 2  + "," + (d.y1 - d.y0 - bbox.height) / 2 + ")";
+        let bbox = d3.select(this).node().getBBox();
+        return "translate(" + (d.x1 - d.x0 - bbox.width) / 2  + "," + (d.y1 - d.y0 - bbox.height - bbox.y) / 2 + ")";
     })
 
 leaf.transition()
@@ -90,21 +108,20 @@ leaf.transition()
 
 
 setTimeout(function(){
-    if (width > height) {
+    if (width > height) { // pc
         var img = svg_load.append("svg:image")
             .attr("xlink:href", "images/cover.png")
-            .attr("width", width * 0.6) // 700
-            .attr("height", width * 0.6 * 420 / 700) // 420
-            .attr("x", (width - width * 0.6) / 2)
-            .attr("y",(height - width * 0.6 * 420 / 700 ) / 2);
+            .attr("width", width * 0.5)
+            .attr("height", width * 0.5 * 4984 / 3480)
+            .attr("x", (width - width * 0.5) / 2)
+            .attr("y",(height - width * 0.5 * 4984 / 3480 ) / 2);
     }
     else {
         var img = svg_load.append("svg:image")
-        .attr("xlink:href", "images/cover.png")
-        .attr("width", width * 0.8) // 700
-        .attr("height", width * 0.8 * 420 / 700) // 420
-        .attr("x", (width - width * 0.8) / 2)
-        .attr("y",(height - width * 0.8 * 420 / 700 ) / 2);
-    }
-    
+            .attr("xlink:href", "images/cover.png")
+            .attr("width", width * 0.85)
+            .attr("height", width * 0.85 * 4984 / 3480)
+            .attr("x", (width - width * 0.85) / 2)
+            .attr("y",(height - width * 0.85 * 4984 / 3480) / 2);
+    } 
 }, 200*16)
