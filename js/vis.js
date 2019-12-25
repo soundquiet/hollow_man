@@ -102,22 +102,22 @@ let loadData = function(){
             });    
         });
         // overview();
-        console.log("end")
     });
 }
 
-let overview = function(){console.log(dataSet)
+let overview = function(){
     if(!dataSet) return;
     
     //clear
     authority_g.attr("opacity", 0);
-    if(vis_g){
+    if(vis_g && svg.select('.vis_g').nodes().length){
         vis_g.attr("opacity", 1);
         return;
     }
     
     vis_g = svg.append("g")
-        .attr("transform", `translate(40,240)`);
+        .attr("transform", `translate(40,240)`)
+        .attr("class", "vis_g");
 
     //ticks
     let ticks_g = vis_g.append("g")
@@ -244,6 +244,16 @@ let overview = function(){console.log(dataSet)
 
 let overview_back = function(){
     authority_g.attr("opacity", 1);
+    authority_g
+        .attr("transform", `translate(` + (800 - 3 * circle2rectScale * circle_r)/2 + `,`+ (1200 - 3 * circle2rectScale * circle_r)/2 +`)`);
+    authority_groups.selectAll("rect")
+        .attr("rx", 0)
+        .attr("ry", 0)
+        .attr("width", d => d.size.width * 1.5 * circle2rectScale * circle_r - padding)
+        .attr("height", d => d.size.height * circle2rectScale * circle_r - padding);
+
+    authority_groups
+    .attr("transform", (d) => `translate(`+ (d.size.x0 * 1.5 * circle2rectScale * circle_r - padding) +`,` + (d.size.y0 * circle2rectScale * circle_r  - padding) + `)`);
     vis_g.attr("opacity", 0);
 }
 
@@ -580,41 +590,6 @@ let higlightNight = function(){
         .delay(3 * duration)
         .duration(duration)
         .attr("y1", lineHeight / 2 - 50);
-        // .each(function(d){
-        //     let _this = this;
-        //     d.forEach(function(app_d, i){
-        //         if(app_d.length === 1 && app_d[0].value === 0) return;
-        //         console.log(i, i * lineHeight_app)
-        //         let circle_data = [{
-        //             "x": (blockWidth)/ 2,
-        //             "y": (i * lineHeight) /2 + lineHeight / 2,//+ 50
-        //             "startAngle":0,
-        //             "endAngle": 2 * Math.PI
-        //         }];
-        //         let arc = d3.arc()
-        //             .innerRadius(36)
-        //             .outerRadius(38);
-        //         d3.select(_this).selectAll("path.animation")
-        //             .data(circle_data, d => d.y)
-        //             .enter().append("path")
-        //             .attr("class", "animation")
-        //             .attr("stroke", "red")
-        //             .attr("fill", "red")
-        //             .attr("x", d => d.x)
-        //             .attr("y", d => d.y)
-        //             .attr("transform", d => "translate("+ d.x + "," + d.y + ")")
-        //             .attr("d", arc)
-        //             .transition()
-        //             .duration(1000)
-        //             .attrTween('d', function(d) {
-        //                 let i = d3.interpolate(d.startAngle+0.1, d.endAngle);
-        //                 return function(t) {
-        //                     d.endAngle = i(t);
-        //                     return arc(d);
-        //                 }
-        //             });
-        //     });
-        // });
 }
 
 let higlightNight_back = function(){

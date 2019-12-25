@@ -65,7 +65,9 @@ let introColor = function(){
     authority_groups.selectAll("path").remove();
 
     //
-    authority_g.attr("transform", `translate(` + (800 - 3 * circle2rectScale * circle_r)/2 + `,`+ (1200 - 3 * circle2rectScale * circle_r)/2 +`)`);
+    authority_g
+        .transition()
+        .attr("transform", `translate(` + (800 - 3 * circle2rectScale * circle_r)/2 + `,`+ (1200 - 3 * circle2rectScale * circle_r)/2 +`)`);
 
     authority_groups
         .transition()
@@ -106,6 +108,8 @@ let introSize_back = function(){
         .attr("transform", (d, i) => `translate(`+ ((i % 2) * 1.5 * circle2rectScale * circle_r - padding)+`,` + (parseInt(i / 2) * circle2rectScale * circle_r - padding)+ `)`);
     authority_groups.selectAll("rect")
         .transition()
+        .attr("rx", 0)
+        .attr("ry", 0)
         .attr("width", 1.5 * circle2rectScale * circle_r - padding)
         .attr("height", circle2rectScale * circle_r - padding);
 }
@@ -120,4 +124,7 @@ let introTexture_back = function(){
     d3.select(authority_groups.nodes()[2]).select("rect")
         .transition()
         .attr("fill", d => d.color);
+    authority_groups.selectAll("rect")
+        .attr("rx", 0)
+        .attr("ry", 0);
 }

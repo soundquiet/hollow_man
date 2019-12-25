@@ -29,8 +29,9 @@ function drawing_cover() {
         return node
     });
 
-    const svg_load = d3.selectAll('.cover').append("svg")
-        .attr("viewBox", [0, 0, width, height]);
+    // const svg_load = d3.selectAll('.cover').append("svg")
+    //     .attr("viewBox", [0, 0, width, height]);
+    let svg_load = d3.selectAll('.cover').select("svg")
 
 
     if (width > height) { //pc

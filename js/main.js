@@ -7,12 +7,36 @@
 // while (document.readyState !== 'complete') {
     // 页面已完全加载 在这里隐藏 loading
 //   }
+const width = window.innerWidth;
+const height = window.innerHeight;
+const svg_load = d3.selectAll('.cover').append("svg")
+        .attr("viewBox", [0, 0, width, height]);
+
+if (width > height) { //pc
+    svg_load.append("svg:image")
+    .attr('x', (width - 1299 * height * 0.6 / 600) / 2 )
+    .attr('y', (height - height * 0.6) / 2)
+    .attr("width", 1299 * height * 0.6 / 600)
+    .attr("height", height * 0.6) // TODO 
+    .attr("xlink:href", "images/tenor.gif")
+} else {
+    svg_load.append("svg:image")
+    .attr('x', (width - width * 0.6) / 2 )
+    .attr('y', (height - width * 0.6 * 1299 / 600) / 2)
+    .attr("width", width * 0.6)
+    .attr("height", width * 0.6 * 1299 / 600) // TODO 
+    .attr("xlink:href", "images/tenor.gif")
+}
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
       // document ready
         drawing_cover();
         scroll_show();
         loadData();
+        $('.container').css('overflow', 'scroll')
+    }
+    else {
+        $('.container').css('overflow', 'hidden')
     }
 };
   
@@ -68,6 +92,7 @@ $('.container').scroll(function () {
         
     }
     else if (top >= trigger_dis('#last_block_2') + 0.8 * wh) {// 第二个问题第二屏
+        $('.end-tilte').css('opacity', 0);
         $("#question2").css('opacity', 1)
             .css({background:"#fbfa6a", transition: "0.5s"});
         $('#choice').css('opacity', 0)
@@ -77,6 +102,7 @@ $('.container').scroll(function () {
         $('#questionText2_2').text("在不经意间晒出去的")
     }
     else if (top >= trigger_dis('#step_vis_final') + 1.2*wh) { // 第二个问题第一屏
+        $('.end-tilte').css('opacity', 0);
         $("#vis").css('opacity', 0);
         $("#question2").css('opacity', 1)
                     .css({background:"#64ae61", transition: "0.5s"});
@@ -85,6 +111,7 @@ $('.container').scroll(function () {
         $('#questionText2_1').text("在怀疑APP窃取我们隐私的同时");
         $('#questionText2_2').text("我们自己保护好隐私了吗");
     }else if(top >= trigger_dis('#step_vis_0')){//vis
+        $('.end-tilte').css('opacity', 0);
         $("#question").css('opacity', 0);
         $("#question2").css('opacity', 0);
         $("#vis").css('opacity', 1);
