@@ -15,12 +15,16 @@ let nodes = treemap(root.sum(function (d) { return d.size }))
 nodes.forEach(node => {
     let dx = node.x1 - node.x0;
     let dy = node.y1 - node.y0
-    node.x0 = Math.max(0, node.x0 + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random()*20+1));
-    node.y0 = Math.max(0, node.y0 + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random()*20+1));
+    // node.x0 = Math.max(0, node.x0 + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random()*20+1));
+    // node.y0 = Math.max(0, node.y0 + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random()*20+1));
     // node.x1 = Math.min(width, node.x1 + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random()*20+1));
     // node.y1 = Math.min(height, node.y1 + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random()*20+1));
-    node.x1 = node.x0 + dx;
-    node.y1 = node.y0 + dy;
+    node.x0 = Math.max(0, node.x0 - Math.floor(Math.random()*30+1));
+    node.y0 = Math.max(0, node.y0 - Math.floor(Math.random()*30+1));
+    node.x1 = Math.min(width, node.x1 + Math.floor(Math.random()*30+1));
+    node.y1 = Math.min(height, node.y1 + Math.floor(Math.random()*30+1));
+    // node.x1 = node.x0 + dx;
+    // node.y1 = node.y0 + dy;
     return node
 });
 
@@ -52,13 +56,12 @@ const leaf = svg_load.selectAll("g")
     .attr('opacity', 0)
     .attr("transform", d => `translate(${width / 2},${height / 2})`);
 
+const class_choice = [0, 1, 2];
 
 leaf.append("rect")
     .attr('class', d=>{
-        let seed =  Math.random();
-        if(seed < 0.3) return 'cover_0';
-        else if(seed < 0.65) return "cover_1";
-        else return "cover_2"
+        var temp = (Math.random()*class_choice.length) >> 0;
+        return 'cover_' + class_choice[temp];
     })
     .attr("stroke-width", 2)
     .attr('rx', 2)

@@ -88,10 +88,37 @@ body {
     display: inline-block;
     width: 32px;
     height: 32px;
+    /* background: url(../images/dengpao.svg); */
+    background-size:cover;
+    background-repeat:no-repeat;
+    margin-bottom: -4px; 
+}
+
+.information_container_head .icon_dengpao{
     background: url(../images/dengpao.svg);
     background-size:cover;
     background-repeat:no-repeat;
     margin-bottom: -4px; 
+}
+
+.information_container_head .icon_example{
+    width: 28px;
+    height: 28px;
+    margin-bottom: -4px; 
+    margin-left: 4px; 
+    background: url(../images/example.svg);
+    background-size:cover;
+    background-repeat:no-repeat;
+}
+
+.information_container_head .icon_kepu{
+    width: 25px;
+    height: 28px;
+    background: url(../images/kepu.svg);
+    background-size:cover;
+    background-repeat:no-repeat;
+    margin-bottom: -4px; 
+    margin-left: 4px; 
 }
 
 .icon_hash {
@@ -306,6 +333,19 @@ em {
 .next_icon {
     width: 8%;
     margin-bottom: 15px;
+    animation: myfirst 2s infinite;
+}
+
+@keyframes myfirst {
+    0% {
+        transform: translate(0px, 6px);
+    }
+    40% {
+        transform: translate(0px, 0px);
+    }
+    100% {
+        transform: translate(0px, 6px);
+    }
 }
 
 #choice_hint {
@@ -326,6 +366,7 @@ em {
 .no_padding {
     padding: 0
 }
+
 #span_ans_1 {
     display: inline-flex;
     width: 16px;
@@ -336,6 +377,7 @@ em {
     /* border-radius: 20%; */
     border-radius: 4px;
     box-shadow:2px 2px 2px grey; 
+    /* animation: press1 4s infinite; */
 }
 
 #span_ans_2 {
@@ -348,6 +390,49 @@ em {
     border-radius: 20%;
     border-radius: 4px;
     box-shadow:2px 2px 2px grey; 
+    /* animation: press2 4s infinite; */
+}
+
+@keyframes press1{
+    0% {
+        box-shadow:0px 0px 2px grey; 
+        transform: translate(0px, 2px);
+    }
+    15% {
+        box-shadow:2px 2px 2px grey; 
+        transform: translate(0px, 0px);
+    }
+    90% {
+        box-shadow:2px 2px 2px grey; 
+        transform: translate(0px, 0px);
+    }
+    100% {
+        box-shadow:0px 0px 2px grey; 
+        transform: translate(0px, 2px);
+    }
+}
+
+@keyframes press2{
+    0% {
+        box-shadow:2px 2px 2px grey; 
+        transform: translate(0px, 0px);
+    }
+    40% {
+        box-shadow:2px 2px 2px grey; 
+        transform: translate(0px, 0px);
+    }
+    50% {
+        box-shadow:0px 0px 2px grey; 
+        transform: translate(0px, 2px);
+    }
+    65% {
+        box-shadow:2px 2px 2px grey; 
+        transform: translate(0px, 0px);
+    }
+    100% {
+        box-shadow:2px 2px 2px grey; 
+        transform: translate(0px, 0px);
+    }
 }
 
 .button_pos {
@@ -359,12 +444,12 @@ em {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin-right:20px;
-    margin-bottom: 25px;
+    margin-left: 20px;
+    margin-bottom: 30px;
     margin-top: 8px;
     border-radius: 4px;
     box-shadow:2px 2px 2px grey; 
-    
+    animation: press1 3s infinite;
 }
 
 .button_neg {
@@ -376,11 +461,12 @@ em {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin-left: 20px;
-    margin-bottom: 25px;
+    margin-right:20px;
+    margin-bottom: 30px;
     margin-top: 8px;
     border-radius: 4px;
     box-shadow: 2px 2px 2px grey; 
+    animation: press2 3s infinite;
 }
 
 .question_hint_ {
@@ -496,7 +582,7 @@ em {
 
 /* 章标题 */
 .chap {
-    margin-top:20px;
+    margin: 50px auto 30px;
     text-align: center;
 }
 
@@ -545,11 +631,13 @@ em {
 .end .blinds{
     background: rgb(94,129,95);
     width: 100vw;
-    height: 5.1vh;
+    height: 5vh;
+    position: relative;
     transform: rotateX(90deg) translateZ(1px);
     /* backface-visibility: hidden; */
     transition: transform 500ms ease;
-    box-shadow: 0 0 1vh rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    /* z-index: 999999999999; */
 }
 
 .blinds .desc{

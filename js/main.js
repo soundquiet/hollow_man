@@ -16,18 +16,19 @@ $('.container').scroll(function () {
         $("#end-content").css('opacity', 1);
         
         endPage = true;
-        // $('.container').animate({
-        //     scrollTop: $('.end').position().top + 1
-        // }, 1000);
-        $('.container').scrollTop($('.end').position().top + 1);
-        // setTimeout(function(){
+        $('.container').animate({
+            scrollTop: $('.end').position().top + 1
+        }, 300);                
+        // $('.container').scrollTop($('.end').position().top + 1);
+        setTimeout(function(){
             $('.blinds').css('transform',"rotateX(0deg) translateZ(1px)");
-        // }, 1000);
+        }, 500);
         setTimeout(function(){
             $('.end-tilte').animate({
                 opacity: 1
             }, 400);
-        }, 800);
+            // $("#end-content div").css('background', '#596f55');
+        }, 1300);
     } else if(top >= trigger_dis('.end')){
         // $("#vis").css('opacity', 0);
         //已经显示endpage
@@ -40,6 +41,11 @@ $('.container').scroll(function () {
         endPage = false;
     }
     else if(top < trigger_dis('.end') - wh * 0.2 && top >= trigger_dis('#last_block_2') + 1.2 * wh){
+        $("#end-content").css('opacity', 0);
+        $('.end-tilte').css('opacity', 0);
+        $('.blinds').css('transform',"rotateX(90deg) translateZ(1px)");
+        //已经显示endpage
+        endPage = false;
         $("#question2").css('opacity', 1);
         
     }
@@ -52,7 +58,7 @@ $('.container').scroll(function () {
         $('#questionText2_1').text("有些隐私泄露是我们自己")
         $('#questionText2_2').text("在不经意间晒出去的")
     }
-    else if (top >= trigger_dis('#step_vis_final') + wh) { // 第二个问题第一屏
+    else if (top >= trigger_dis('#step_vis_final') + 1.2*wh) { // 第二个问题第一屏
         $("#vis").css('opacity', 0);
         $("#question2").css('opacity', 1)
                     .css({background:"#64ae61", transition: "0.5s"});
@@ -109,25 +115,18 @@ function action(index){
 
 let quesObject = ['好奇', '金钱', '便利'];
 function questionAns(value) {
-    console.log(value)
     let question = value.split('_')[0];
     let selected = value.split('_')[1];
-    // let locki = 
-    eval('lock'+question+'=true')
-    // locki = true;
-    // $('.container').scrollTop($('#step_choice_'+question).position().top + 0.5*wh);
-    // enableScrollPhone('container')
-    // $('.container').scrollTop($('#block_behind_q'+question).position().top + 1).css('transition', '1s');
+    // eval('lock'+question+'=true')
     $('.question_none_'+question).css('display', 'block');
     $('.container').animate({
         scrollTop: $('#block_behind_q'+question).position().top + 1
     }, 1000);
-    // $('#block_q0').delay(1500).height(0)
     setTimeout(function(){
         $('#block_q0').css('height', '5vh')
     }, 1100)
     $('#last_block_' + question).css('height', '20vh')
-    if(selected == 'pos') {
+    if(selected == 'neg') {
         $('.vs_pos').css({'width': '80%', transition:'0.5s'});
         $('.vs_neg').css({'width': '20%', transition:'0.5s'});
     } else {
@@ -136,8 +135,7 @@ function questionAns(value) {
         $('#ans_result_'+question).text(' 这可能导致...')
     }
     $('#vs_text_neg_' + question).text(quesObject[question])    
-    // $('.vs_story_'+question).css('display', 'inline-block');
-    // lock = false
+    $('#animation' + question + " button").css("animation", "none");
 }
 function para_dis(d){
     return parseInt($(d).offset().top) - 20;
@@ -151,15 +149,6 @@ function underline_trigger(ele) {
         $(ele).removeClass('underline_active');
     }
 }
-
-// function blur_trigger() {
-//     var window_height = $(window).height();
-//     if ( para_dis(ele) <= 2*window_height/3){
-//         $('#question2').addClass('blur_active');
-//     } else {
-//         $('#question2').removeClass('blur_active');
-//     }
-// }
 
 function blur_trigger() {
     var window_height = $(window).height();
@@ -182,26 +171,10 @@ function blur_trigger() {
 
 function scroll_show(){
     $('.container').scroll(function(){
-        underline_trigger('.ud-1');
-        underline_trigger('.ud-2');
         underline_trigger('.ud-3');
-        underline_trigger('.ud-4');
         blur_trigger();
     });
 }
 
-// function stopScrollPhone() {
-//     var fixed = document.getElementById('container');
-//     fixed.addEventListener('touchmove', function(e) {
-//         e.preventDefault();
-//     }, false);
-// }
-
-// function enableScrollPhone() {
-//     var fixed = document.getElementById('container');
-
-//     fixed.removeEventListener('touchmove', function(e) {
-//         e.preventDefault();
-//     }, false);
-// }
 scroll_show();
+loadData();

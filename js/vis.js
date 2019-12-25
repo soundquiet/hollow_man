@@ -26,18 +26,7 @@ const lineHeight = 200,
 
 const overview2detailScale = 1.4;
 
-let overview = function(){
-    //clear
-    authority_g.attr("opacity", 0);
-    if(vis_g){
-        vis_g.attr("opacity", 1);
-        return;
-    }
-    
-    vis_g = svg.append("g")
-        .attr("transform", `translate(40,240)`)
-        //.attr("transform", `rotate(90, 400 600) scale(1.3)`);;
-
+let loadData = function(){
     d3.csv("data/app.csv", function(data){
         data.forEach(d => {
             d.authority = parseInt(d.authority);
@@ -109,131 +98,145 @@ let overview = function(){
 
                     return nodes;
                 });
-            });
+            });    
         });
-
-        //ticks
-        let ticks_g = vis_g.append("g")
-            .attr("transform", `translate(0,0)`)
-            .selectAll("g")
-            .data(ticks)
-            .enter().append("g")
-            .attr("class", "tick");
-
-        ticks_g.append('text')
-            .attr("x", (d, i) => i * blockWidth)
-            .attr("y", 20)
-            .attr("text-anchor", "middle")
-            .attr("font-size", 26)
-            .text(d => d);
-
-        ticks_g.append('circle')
-            .attr("cx", (d, i) => i * blockWidth)
-            .attr("cy", 40)
-            .attr("r", 5);
-
-        //treemap
-        people_groups = vis_g.selectAll("people_groups")
-            .data(people)
-            .enter().append("g")
-            .attr("class", "people_groups")
-            .attr("transform", (d , i) => `translate(0 ,`+ (i * lineHeight + 40) +`)`);
-        
-        let back = people_groups.append("g").attr("class", "back");
-
-        back.append("line")
-            .attr("class", "decoration")
-            .attr("x1", 0)
-            .attr("x2", blockWidth * 6)
-            .attr("y1", lineHeight / 2)
-            .attr("y2", lineHeight / 2)
-            .attr("stroke", "#333")
-            .attr("stroke-width", '1');
-
-        back.selectAll("circle")
-            .data(ticks)
-            .enter().append("circle")
-            .attr("class", "decoration")
-            .attr("cx", (d, i) => i * blockWidth)
-            .attr("cy", lineHeight / 2)
-            .attr("r", 3);
-
-        back.append("svg:image")
-            .attr("class", "decoration")
-            .attr("xlink:href", d => d.png)
-            .attr("width", 50)
-            .attr("height", 50)
-            .attr("x", -25)
-            .attr("y", lineHeight / 2 - 25);
-
-        //每一个时间段的块
-        let blocks = people_groups.selectAll(".block")
-            .data(d => d.periodData, (d,i) => i)
-            .enter().append("g")
-            .attr("class",(d , i) => "block block_"+ i)
-            .attr("transform", (d , i) => {
-                return `translate(`+ (i * blockWidth + (blockWidth - d[0].parent.x1 + d[0].parent.x0) / 2) +`,`+ (lineHeight - d[0].parent.y1 + d[0].parent.y0) / 2 +`)`
-            });
-        
-        //backgroud
-        blocks.append("rect")
-            .attr("fill", "#fff")
-            .attr("class", "decoration")
-            .attr("x", d => d[0].parent.x0)
-            .attr("y", d => d[0].parent.y0)
-            .attr("width", d => d[0].parent.x1 - d[0].parent.x0)
-            .attr("height", d => d[0].parent.y1 - d[0].parent.y0);
-
-        blocks.selectAll(".node")
-            .data(d => d.filter(d => d.depth === 2), d => d.data.app + d.data.time + d.data.authority)
-            .enter().append("rect")
-            .attr("class", "node")
-            .attr("fill", d => {
-                if(d.data.status === "allow") return Authority[d.data.authority].color;
-                else return texturelist[Authority[d.data.authority].name].url();
-            })
-            .attr("x", d => d.x0)
-            .attr("y", d => d.y0)
-            .attr("width", d => d.x1 - d.x0)
-            .attr("height", d => d.y1 - d.y0)
-            .attr("opacity", 0);
-
-        blocks.selectAll(".cluster")
-            .data(d => d.filter(d => d.depth === 1))
-            .enter().append("rect")
-            .attr("class", "cluster")
-            .attr("fill", (d,i) => {
-                if(d.value)
-                    return Authority[i].color;
-            })
-            .attr("x", d => d.x0)
-            .attr("y", d => d.y0)
-            .attr("width", d => d.x1 - d.x0)
-            .attr("height", d => d.y1 - d.y0)
-            .attr("opacity", 1);
-
-        //legend
-        let legends = svg.append('g')
-            .attr('class', 'legends')
-            .attr('transform', `translate(125,1100)`)
-            .selectAll('.legend')
-            .data(Authority, d => d.name)
-            .enter().append("g")
-            .attr("class", "legend")
-            .attr("transform", (d, i) => `translate(`+ (i) * 100 +`,` + 0 + `)`);
-
-        legends.append("rect")
-            .attr("width", circle_r)
-            .attr("height", circle_r)
-            .attr("rx", circle_r / 2)
-            .attr("ry", circle_r / 2)
-            .attr("fill", d => d.color);
-    
-        legends.append("path")
-            .attr("fill", "#fff")
-            .attr("transform", "translate(9.5,9.5) scale(0.04, 0.04)")
-            .attr("d", d => d.icon);
+        // overview();
     });
+}
+
+let overview = function(){
+    if(!dataSet) return;
+    //clear
+    authority_g.attr("opacity", 0);
+    if(vis_g){
+        vis_g.attr("opacity", 1);
+        return;
+    }
+    
+    vis_g = svg.append("g")
+        .attr("transform", `translate(40,240)`);
+
+    //ticks
+    let ticks_g = vis_g.append("g")
+        .attr("transform", `translate(0,0)`)
+        .selectAll("g")
+        .data(ticks)
+        .enter().append("g")
+        .attr("class", "tick");
+
+    ticks_g.append('text')
+        .attr("x", (d, i) => i * blockWidth)
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .attr("font-size", 26)
+        .text(d => d);
+
+    ticks_g.append('circle')
+        .attr("cx", (d, i) => i * blockWidth)
+        .attr("cy", 40)
+        .attr("r", 5);
+
+    //treemap
+    people_groups = vis_g.selectAll("people_groups")
+        .data(people)
+        .enter().append("g")
+        .attr("class", "people_groups")
+        .attr("transform", (d , i) => `translate(0 ,`+ (i * lineHeight + 40) +`)`);
+    
+    let back = people_groups.append("g").attr("class", "back");
+
+    back.append("line")
+        .attr("class", "decoration")
+        .attr("x1", 0)
+        .attr("x2", blockWidth * 6)
+        .attr("y1", lineHeight / 2)
+        .attr("y2", lineHeight / 2)
+        .attr("stroke", "#333")
+        .attr("stroke-width", '1');
+
+    back.selectAll("circle")
+        .data(ticks)
+        .enter().append("circle")
+        .attr("class", "decoration")
+        .attr("cx", (d, i) => i * blockWidth)
+        .attr("cy", lineHeight / 2)
+        .attr("r", 3);
+
+    back.append("svg:image")
+        .attr("class", "decoration")
+        .attr("xlink:href", d => d.png)
+        .attr("width", 50)
+        .attr("height", 50)
+        .attr("x", -25)
+        .attr("y", lineHeight / 2 - 25);
+
+    //每一个时间段的块
+    let blocks = people_groups.selectAll(".block")
+        .data(d => d.periodData, (d,i) => i)
+        .enter().append("g")
+        .attr("class",(d , i) => "block block_"+ i)
+        .attr("transform", (d , i) => {
+            return `translate(`+ (i * blockWidth + (blockWidth - d[0].parent.x1 + d[0].parent.x0) / 2) +`,`+ (lineHeight - d[0].parent.y1 + d[0].parent.y0) / 2 +`)`
+        });
+    
+    //backgroud
+    blocks.append("rect")
+        .attr("fill", "#fff")
+        .attr("class", "decoration")
+        .attr("x", d => d[0].parent.x0)
+        .attr("y", d => d[0].parent.y0)
+        .attr("width", d => d[0].parent.x1 - d[0].parent.x0)
+        .attr("height", d => d[0].parent.y1 - d[0].parent.y0);
+
+    blocks.selectAll(".node")
+        .data(d => d.filter(d => d.depth === 2), d => d.data.app + d.data.time + d.data.authority)
+        .enter().append("rect")
+        .attr("class", "node")
+        .attr("fill", d => {
+            if(d.data.status === "allow") return Authority[d.data.authority].color;
+            else return texturelist[Authority[d.data.authority].name].url();
+        })
+        .attr("x", d => d.x0)
+        .attr("y", d => d.y0)
+        .attr("width", d => d.x1 - d.x0)
+        .attr("height", d => d.y1 - d.y0)
+        .attr("opacity", 0);
+
+    blocks.selectAll(".cluster")
+        .data(d => d.filter(d => d.depth === 1))
+        .enter().append("rect")
+        .attr("class", "cluster")
+        .attr("fill", (d,i) => {
+            if(d.value)
+                return Authority[i].color;
+        })
+        .attr("x", d => d.x0)
+        .attr("y", d => d.y0)
+        .attr("width", d => d.x1 - d.x0)
+        .attr("height", d => d.y1 - d.y0)
+        .attr("opacity", 1);
+
+    //legend
+    let legends = svg.append('g')
+        .attr('class', 'legends')
+        .attr('transform', `translate(125,1100)`)
+        .selectAll('.legend')
+        .data(Authority, d => d.name)
+        .enter().append("g")
+        .attr("class", "legend")
+        .attr("transform", (d, i) => `translate(`+ (i) * 100 +`,` + 0 + `)`);
+
+    legends.append("rect")
+        .attr("width", circle_r)
+        .attr("height", circle_r)
+        .attr("rx", circle_r / 2)
+        .attr("ry", circle_r / 2)
+        .attr("fill", d => d.color);
+
+    legends.append("path")
+        .attr("fill", "#fff")
+        .attr("transform", "translate(9.5,9.5) scale(0.04, 0.04)")
+        .attr("d", d => d.icon);
 }
 
 let overview_back = function(){
