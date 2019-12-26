@@ -82,6 +82,7 @@ body {
 .information_container_head{
     text-align: center;
     text-decoration: wavy underline rgb(152,245,139);
+    -webkit-text-decoration: wavy underline rgb(152,245,139);
 }
 
 .information_container_head .icon{
@@ -638,7 +639,7 @@ em {
     position: relative;
     transform: rotateX(90deg) translateZ(1px);
     /* backface-visibility: hidden; */
-    transition: transform 500ms ease;
+    transition: transform 700ms ease;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
     /* z-index: 999999999999; */
 }

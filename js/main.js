@@ -47,10 +47,12 @@ $('.container').scroll(function () {
         $("#end-content").css('opacity', 1);
         
         endPage = true;
-        $('.container').animate({
+        $('.container').css('overflow', 'hidden');
+        $('.container').stop().animate({
             scrollTop: $('.end').position().top + 1
         }, 300);                
         setTimeout(function(){
+            $('.container').css('overflow', 'scroll');
             $('.blinds').css('transform',"rotateX(0deg) translateZ(1px)");
         }, 500);
         setTimeout(function(){

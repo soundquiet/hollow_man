@@ -61,13 +61,13 @@ let loadData = function(){
                     sizeTree.children[l.authority].children.push(l);
                 });
 
-                let treemap = d3.treemap()
+                let treemap = d3.treemap()          
                     .size([Math.sqrt(count) * lengthPerTime, Math.sqrt(count) * lengthPerTime])
                     .padding(1);
                 
                 let root = d3.hierarchy(sizeTree)
                 let nodes = treemap(root
-                        .sum(function(d) { return d.times; }))
+                        .sum(function(d) { return d.times; })) 
                         .descendants();
                 nodes.shift();
                 return nodes;
@@ -207,8 +207,9 @@ let overview = function(){
         .enter().append("rect")
         .attr("class", "cluster")
         .attr("fill", (d,i) => {
-            if(d.value)
-                return Authority[i].color;
+            if(d.value){
+                return Authority[d.children[0].data.authority].color;
+            }
         })
         .attr("x", d => d.x0)
         .attr("y", d => d.y0)
