@@ -5,10 +5,10 @@ const svg_load = d3.selectAll('.cover').append("svg")
 
 if (width > height) {
     svg_load.append("svg:image")
-        .attr('x', (width - 1299 * height * 0.9 / 600) / 2 )
-        .attr('y', (height - height * 0.9) / 2)
-        .attr("width", 1299 * height * 0.9 / 600)
-        .attr("height", height * 0.9)
+        .attr('x', (width - 1299 * height * 0.6 / 600) / 2 )
+        .attr('y', (height - height * 0.6) / 2)
+        .attr("width", 1299 * height * 0.6 / 600)
+        .attr("height", height * 0.6)
         .attr("xlink:href", "images/tenor.gif")
 } else {
     svg_load.append("svg:image")
