@@ -8,7 +8,6 @@ let initAuthority = function(){
         .append("svg")
         .attr("viewBox", "0 0 800 1200");
 
-    /** texture **/
     Authority.forEach(d => {
         let texture = textures
             .lines()
@@ -16,10 +15,9 @@ let initAuthority = function(){
             .stroke("#666")
             .background(d.color)
         texturelist[d.name] = texture;
-        svg.call(texture); // 利用 svg.call 將 Def 元素注入 SVG 之中
+        svg.call(texture);
     });
 
-    /** authority **/
     authority_g = svg.append("g")
         .attr("transform", `translate(190,195)`);
     authority_groups = authority_g.selectAll(".authority_circle")
@@ -60,11 +58,9 @@ let initAuthority_back = function(){
 }
 
 let introColor = function(){
-    //移除text 和 icon
     authority_groups.selectAll("text").remove();
     authority_groups.selectAll("path").remove();
 
-    //
     authority_g
         .transition()
         .attr("transform", `translate(` + (800 - 3 * circle2rectScale * circle_r)/2 + `,`+ (1200 - 3 * circle2rectScale * circle_r)/2 +`)`);
@@ -86,7 +82,6 @@ let introColor_back = function(){
 }
 
 let introSize = function(){
-    //防止滑动过快
     authority_groups.selectAll("rect")
         .attr("rx", 0)
         .attr("ry", 0)

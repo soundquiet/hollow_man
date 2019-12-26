@@ -1,35 +1,25 @@
-// window.onload= function(){
-//     console.log('load')
-//     drawing_cover();
-//     scroll_show();
-//     loadData();
-// }
-// while (document.readyState !== 'complete') {
-    // 页面已完全加载 在这里隐藏 loading
-//   }
 const width = window.innerWidth;
 const height = window.innerHeight;
 const svg_load = d3.selectAll('.cover').append("svg")
         .attr("viewBox", [0, 0, width, height]);
 
-if (width > height) { //pc
+if (width > height) {
     svg_load.append("svg:image")
-    .attr('x', (width - 1299 * height * 0.6 / 600) / 2 )
-    .attr('y', (height - height * 0.6) / 2)
-    .attr("width", 1299 * height * 0.6 / 600)
-    .attr("height", height * 0.6) // TODO 
-    .attr("xlink:href", "images/tenor.gif")
+        .attr('x', (width - 1299 * height * 0.9 / 600) / 2 )
+        .attr('y', (height - height * 0.9) / 2)
+        .attr("width", 1299 * height * 0.9 / 600)
+        .attr("height", height * 0.9)
+        .attr("xlink:href", "images/tenor.gif")
 } else {
     svg_load.append("svg:image")
     .attr('x', (width - width * 0.6) / 2 )
     .attr('y', (height - width * 0.6 * 1299 / 600) / 2)
     .attr("width", width * 0.6)
-    .attr("height", width * 0.6 * 1299 / 600) // TODO 
+    .attr("height", width * 0.6 * 1299 / 600)
     .attr("xlink:href", "images/tenor.gif")
 }
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
-      // document ready
         drawing_cover();
         scroll_show();
         loadData();
@@ -52,8 +42,7 @@ $('.question_none_0').css('display', 'none')
 const vis_text = ["权限","颜色","大小","纹理","","","","","","","",""]
 $('.container').scroll(function () {
     let top = $(this).scrollTop();
-    if(top >= trigger_dis('.end')  && !endPage){//+ 0.8 * wh
-        // $("#vis").css('opacity', 0);
+    if(top >= trigger_dis('.end')  && !endPage){
         $("#question2").css('opacity', 0);
         $("#end-content").css('opacity', 1);
         
@@ -61,7 +50,6 @@ $('.container').scroll(function () {
         $('.container').animate({
             scrollTop: $('.end').position().top + 1
         }, 300);                
-        // $('.container').scrollTop($('.end').position().top + 1);
         setTimeout(function(){
             $('.blinds').css('transform',"rotateX(0deg) translateZ(1px)");
         }, 500);
@@ -69,29 +57,27 @@ $('.container').scroll(function () {
             $('.end-tilte').animate({
                 opacity: 1
             }, 400);
-            // $("#end-content div").css('background', '#596f55');
         }, 1300);
     } else if(top >= trigger_dis('.end')){
-        // $("#vis").css('opacity', 0);
-        //已经显示endpage
+        
     }
     else if(top < trigger_dis('.end') - wh * 0.2 && top >= trigger_dis('#last_block_2') + 3 *wh){
         $("#end-content").css('opacity', 0);
         $('.end-tilte').css('opacity', 0);
         $('.blinds').css('transform',"rotateX(90deg) translateZ(1px)");
-        //已经显示endpage
+        
         endPage = false;
     }
     else if(top < trigger_dis('.end') - wh * 0.2 && top >= trigger_dis('#last_block_2') + 1.2 * wh){
         $("#end-content").css('opacity', 0);
         $('.end-tilte').css('opacity', 0);
         $('.blinds').css('transform',"rotateX(90deg) translateZ(1px)");
-        //已经显示endpage
+        
         endPage = false;
         $("#question2").css('opacity', 1);
         
     }
-    else if (top >= trigger_dis('#last_block_2') + 0.8 * wh) {// 第二个问题第二屏
+    else if (top >= trigger_dis('#last_block_2') + 0.8 * wh) {
         $('.end-tilte').css('opacity', 0);
         $("#question2").css('opacity', 1)
             .css({background:"#fbfa6a", transition: "0.5s"});
@@ -101,7 +87,7 @@ $('.container').scroll(function () {
         $('#questionText2_1').text("有些隐私泄露是我们自己")
         $('#questionText2_2').text("在不经意间晒出去的")
     }
-    else if (top >= trigger_dis('#step_vis_final') + 1.2*wh) { // 第二个问题第一屏
+    else if (top >= trigger_dis('#step_vis_final') + 1.2*wh) { 
         $('.end-tilte').css('opacity', 0);
         $("#vis").css('opacity', 0);
         $("#question2").css('opacity', 1)
@@ -110,7 +96,7 @@ $('.container').scroll(function () {
                             .css({fill: "fbfa6a"});
         $('#questionText2_1').text("在怀疑APP窃取我们隐私的同时");
         $('#questionText2_2').text("我们自己保护好隐私了吗");
-    }else if(top >= trigger_dis('#step_vis_0')){//vis
+    }else if(top >= trigger_dis('#step_vis_0')){
         $('.end-tilte').css('opacity', 0);
         $("#question").css('opacity', 0);
         $("#question2").css('opacity', 0);
@@ -124,14 +110,14 @@ $('.container').scroll(function () {
             } 
         }
     }
-    else if(top >= trigger_dis('#step_user_intro')){//user-introduction
+    else if(top >= trigger_dis('#step_user_intro')){
         $("#vis").css('opacity', 0);
         $("#user-introduction").css('opacity', 1);
         $("#question").css({opacity: 0, transition: "1s"});
     }else if (top >= (1.5 * wh)) {
         $("#user-introduction").css('opacity', 0);
         $("#question").css('opacity', 1)
-            .css({background:"#64ae61", transition: "0.5s"}); // TODO: add transition?
+            .css({background:"#64ae61", transition: "0.5s"}); 
         $('#questionMark').css({fill: "fbfa6a", transition: "0.5s"});
         $('#questionText').text("这些APP会收集多少隐私信息")
     }else{
@@ -158,11 +144,10 @@ function action(index){
     viewCurrentIndex = index;
 }
 
-let quesObject = ['好奇', '金钱', '便利'];
+let quesObject = ['好奇', '金钱', '潮流'];
 function questionAns(value) {
     let question = value.split('_')[0];
     let selected = value.split('_')[1];
-    // eval('lock'+question+'=true')
     $('.question_none_'+question).css('display', 'block');
     $('.container').animate({
         scrollTop: $('#block_behind_q'+question).position().top + 1

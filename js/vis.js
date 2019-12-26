@@ -12,11 +12,11 @@ const period = ["9","12","15","18","21","24"];
 const ticks = ["0","9","12","15","18","21","24"];
 const person2app = {
     "csj":["微信", "微博","支付宝", "高德地图", "QQ", "手机淘宝", 
-        "知乎", "快应用中心","虾米音乐", "网易云音乐"],//,"石墨文档", "精品推荐","WPS Office","同心云"
+        "知乎", "快应用中心","虾米音乐", "网易云音乐"],
     "jkl":[ "微信", "支付宝", "第一弹泰日韩剧","微博","西瓜视频","知乎","高德地图",
-             "哈啰出行", "QQ", "网易云音乐",],//"网易邮箱大师",
+             "哈啰出行", "QQ", "网易云音乐",],
     "ponda":["微信", "QQ", "手机淘宝",
-        "高德地图","支付宝", "小红书","交通银行","全能扫描王","微博国际版","大麦" ],// ,"美图秀秀","网易云音乐",
+        "高德地图","支付宝", "小红书","交通银行","全能扫描王","微博国际版","大麦" ],
 };
 
 const lengthPerTime = 3.6;
@@ -101,14 +101,13 @@ let loadData = function(){
                 });
             });    
         });
-        // overview();
+        
     });
 }
 
 let overview = function(){
     if(!dataSet) return;
     
-    //clear
     authority_g.attr("opacity", 0);
     if(vis_g && svg.select('.vis_g').nodes().length){
         vis_g.attr("opacity", 1);
@@ -119,7 +118,7 @@ let overview = function(){
         .attr("transform", `translate(40,240)`)
         .attr("class", "vis_g");
 
-    //ticks
+    
     let ticks_g = vis_g.append("g")
         .attr("transform", `translate(0,0)`)
         .selectAll("g")
@@ -139,7 +138,7 @@ let overview = function(){
         .attr("cy", 40)
         .attr("r", 5);
 
-    //treemap
+    
     people_groups = vis_g.selectAll("people_groups")
         .data(people)
         .enter().append("g")
@@ -173,7 +172,6 @@ let overview = function(){
         .attr("x", -25)
         .attr("y", lineHeight / 2 - 25);
 
-    //每一个时间段的块
     let blocks = people_groups.selectAll(".block")
         .data(d => d.periodData, (d,i) => i)
         .enter().append("g")
@@ -182,7 +180,6 @@ let overview = function(){
             return `translate(`+ (i * blockWidth + (blockWidth - d[0].parent.x1 + d[0].parent.x0) / 2) +`,`+ (lineHeight - d[0].parent.y1 + d[0].parent.y0) / 2 +`)`
         });
     
-    //backgroud
     blocks.append("rect")
         .attr("fill", "#fff")
         .attr("class", "decoration")
@@ -219,7 +216,6 @@ let overview = function(){
         .attr("height", d => d.y1 - d.y0)
         .attr("opacity", 1);
 
-    //legend
     let legends = svg.append('g')
         .attr('class', 'legends')
         .attr('transform', `translate(125,1100)`)
@@ -348,7 +344,6 @@ let detail = function(name){
         .attr("opacity", 1);
     people_groups.each(function(d){
         if(d.name === name){
-            //clear
             vis_g.selectAll(".app_decoration").remove();
 
             vis_g.attr("transform", (d , i) => `translate(40 ,`+ (0) +`)`);
@@ -356,7 +351,6 @@ let detail = function(name){
                 .attr("opacity", 1)
                 .attr("transform", (d , i) => `translate(0 ,`+ (20) +`)`);
             
-            //clear
             person.selectAll(".node").filter(d => person2app[name].indexOf(d.data.app) === -1)
                 .remove();
             person.selectAll(".decoration")
@@ -455,7 +449,6 @@ let detail_back = function(name){
         .attr("opacity", 1);
     people_groups.each(function(d){
         if(d.name === name){
-            //clear
             vis_g.selectAll(".app_decoration").remove();
 
             vis_g.attr("transform", (d , i) => `translate(40 ,`+ (0) +`)`);
@@ -463,7 +456,6 @@ let detail_back = function(name){
                 .attr("opacity", 1)
                 .attr("transform", (d , i) => `translate(0 ,`+ (20) +`)`);
             
-            //clear
             person.selectAll(".node").filter(d => person2app[name].indexOf(d.data.app) === -1)
                 .remove();
             person.selectAll(".decoration")

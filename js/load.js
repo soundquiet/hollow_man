@@ -5,51 +5,25 @@ function drawing_cover() {
 
     let treemap = d3.treemap()
         .size([width, height])
-        // .padding(2);
 
     let root = d3.hierarchy(data);
 
     let nodes = treemap(root.sum(function (d) { return d.size }))
         .leaves();
 
-    // 修改rect大小 随机
     nodes.forEach(node => {
         let dx = node.x1 - node.x0;
         let dy = node.y1 - node.y0
-        // node.x0 = Math.max(0, node.x0 + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random()*20+1));
-        // node.y0 = Math.max(0, node.y0 + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random()*20+1));
-        // node.x1 = Math.min(width, node.x1 + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random()*20+1));
-        // node.y1 = Math.min(height, node.y1 + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random()*20+1));
+        
         node.x0 = Math.max(0, node.x0 - Math.floor(Math.random()*30+1));
         node.y0 = Math.max(0, node.y0 - Math.floor(Math.random()*30+1));
         node.x1 = Math.min(width, node.x1 + Math.floor(Math.random()*30+1));
         node.y1 = Math.min(height, node.y1 + Math.floor(Math.random()*30+1));
-        // node.x1 = node.x0 + dx;
-        // node.y1 = node.y0 + dy;
+
         return node
     });
 
-    // const svg_load = d3.selectAll('.cover').append("svg")
-    //     .attr("viewBox", [0, 0, width, height]);
     let svg_load = d3.selectAll('.cover').select("svg")
-
-
-    if (width > height) { //pc
-        svg_load.append("svg:image")
-        .attr('x', (width - 1299 * height * 0.6 / 600) / 2 )
-        .attr('y', (height - height * 0.6) / 2)
-        .attr("width", 1299 * height * 0.6 / 600)
-        .attr("height", height * 0.6) // TODO 
-        .attr("xlink:href", "images/tenor.gif")
-    } else {
-        svg_load.append("svg:image")
-        .attr('x', (width - width * 0.6) / 2 )
-        .attr('y', (height - width * 0.6 * 1299 / 600) / 2)
-        .attr("width", width * 0.6)
-        .attr("height", width * 0.6 * 1299 / 600) // TODO 
-        .attr("xlink:href", "images/tenor.gif")
-    }
-
 
     const leaf = svg_load.selectAll("g")
         .data(root.leaves())
@@ -68,12 +42,10 @@ function drawing_cover() {
         .attr("stroke-width", 2)
         .attr('rx', 2)
         .attr('ry', 2)
-        // .attr("stroke-dasharray", "10 5")
         .attr("width", d => d.x1 - d.x0) 
         .attr("height", d => d.y1 - d.y0);
 
     leaf.append("text")
-        // .attr('x', 52)
         .attr('y', 0)
         .attr("fill", function(d){
             let cla = d3.select(this.parentNode).select('rect').attr('class');
@@ -85,10 +57,8 @@ function drawing_cover() {
         .data(d => {
             let temp = [];
             let wrapWidth = d.x1 - d.x0 - 20 >= 20 ? d.x1 - d.x0 - 20 : d.x1 - d.x0;
-            const perLine = Math.floor(wrapWidth / singleText); // 每行能放多少个
-            // console.log(wrapWidth, singleText, perLine, d.data)
+            const perLine = Math.floor(wrapWidth / singleText); 
             for(let index=0; index<d['data']['size'] ; index+=perLine ){
-                // console.log(index)
                 temp.push(d['data']['text'].slice(index,index+perLine));
             }   
             return temp;
@@ -113,7 +83,7 @@ function drawing_cover() {
 
 
     setTimeout(function(){
-        if (width > height) { // pc
+        if (width > height) {
             var img = svg_load.append("svg:image")
                 .attr("xlink:href", "images/cover.png")
                 .attr("width", width * 0.5)

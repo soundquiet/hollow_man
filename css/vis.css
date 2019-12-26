@@ -330,6 +330,9 @@ em {
     color: #190d39;  line-height: 5vh; margin-top: 0; margin-bottom: 0; font-size: 20px;
 }
 
+.img {
+    line-height: 0px;
+}
 .next_icon {
     width: 8%;
     margin-bottom: 15px;
